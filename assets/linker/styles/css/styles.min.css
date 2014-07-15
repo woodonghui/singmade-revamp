@@ -1,0 +1,252 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400,700);
+/*global variables, functions*/
+/* end */
+/*global styles*/
+hr.style-six {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+hr.row {
+  margin: 2rem auto;
+  border: 0;
+  height: 0;
+  border-top: none;
+  border-bottom: 1px solid #bbb;
+    /*
+	height: 1px;
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+	background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+	background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+	background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+	*/
+}
+
+.ltr {
+  text-align: left;
+}
+
+.rtl {
+  text-align: right;
+}
+
+.ttt {
+  text-align: center;
+}
+
+.button {
+  padding: 5px 10px;
+  margin: 0;
+  background: #EE5193;
+  display: inline-block;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 0.8rem;
+  -webkit-transition: background linear .2s;
+  -moz-transition: background linear .2s;
+  -o-transition: background linear .2s;
+  transition: background linear .2s;
+}
+.button:hover {
+  color: white;
+  background: black;
+}
+
+.button:disabled {
+  background: grey !important;
+  cursor: progress;
+}
+
+/*end*/
+/*page styles*/
+html body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #333;
+  /*background: url("../../../images/background.png") repeat scroll 0 0 #fff;*/
+}
+html body .body-wrapper {
+  /*background: rgba(255,255,255,0.6);*/
+  background: white;
+  width: 100%;
+  min-height: 100%;
+  margin: 0 auto -226px;
+}
+
+.header {
+  /*background: rgba(0,0,0,0.7);*/
+  background: black;
+}
+.header .button-group {
+  padding: 10px 0;
+}
+
+.footer {
+  padding: 30px 0;
+  /*background: rgba(0,0,0,0.7);*/
+  background: black;
+  font-size: 0.8rem;
+  color: #fff;
+}
+.footer .logo {
+  width: 80px;
+  padding: 10px 0;
+}
+.footer .link a {
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin: 20px;
+  color: #fff;
+}
+
+.nav {
+  box-shadow: 2px 2px 2px #666;
+  color: white;
+  background: url("../../../images/stripe.jpg") repeat-x;
+}
+.nav ul {
+  list-style: none;
+  position: relative;
+  text-transform: capitalize;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+.nav ul:after {
+  content: '';
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+.nav ul li {
+  float: left;
+  letter-spacing: 1px;
+  position: relative;
+  font-size: 1.2rem;
+}
+.nav ul li a {
+  display: block;
+  padding: 10px 25px;
+  color: white;
+  -webkit-transition: background linear .2s;
+  -moz-transition: background linear .2s;
+  -o-transition: background linear .2s;
+  transition: background linear .2s;
+}
+.nav ul li a:hover {
+  background: black;
+}
+
+.inner-wrapper {
+  /*padding: 20px;*/
+  background: white;
+}
+
+.normal-wrapper {
+  padding: 2rem 1rem;
+}
+.normal-wrapper h1 {
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  color: #999;
+}
+
+.designer-wrapper {
+  color: white;
+  padding: 2rem 1rem;
+  font-size: 0.8rem;
+  background: black;
+}
+.designer-wrapper img.avatar {
+  width: 150px;
+  border-radius: 75px;
+  -webkit-border-radius: 75px;
+  -moz-border-radius: 75px;
+}
+.designer-wrapper .name-title {
+  padding-top: 1rem;
+  text-align: center;
+}
+.designer-wrapper .name-title .name {
+  font-weight: bold;
+}
+.designer-wrapper .profile {
+  line-height: 1rem;
+  letter-spacing: 1px;
+  padding: 1rem;
+}
+.designer-wrapper .actions {
+  padding: 1rem;
+}
+
+.list-wrapper {
+  padding: 2rem 1rem;
+}
+.list-wrapper h1 {
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  color: #999;
+}
+.list-wrapper li.piece {
+  font-size: 0.8rem;
+}
+.list-wrapper li.piece a {
+  display: block;
+  overflow: hidden;
+  color: #333;
+  text-align: center;
+}
+.list-wrapper li.piece img {
+  -webkit-transition: all 550ms ease-out;
+  -moz-transition: all 550ms ease-out;
+  transition: all 550ms ease-out;
+  -webkit-transform: scale(1, 1);
+  -moz-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  -o-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+.list-wrapper li.piece:hover img {
+  -webkit-transition: all 550ms ease-out;
+  -moz-transition: all 550ms ease-out;
+  transition: all 550ms ease-out;
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
+  -ms-transform: scale(1.1, 1.1);
+  -o-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
+}
+.list-wrapper li.designer {
+  font-size: 0.8rem;
+  color: #333;
+}
+.list-wrapper li.designer a {
+  display: block;
+  overflow: hidden;
+  color: #333;
+  text-align: center;
+}
+.list-wrapper li.designer img {
+  border-radius: 200px;
+}
+.list-wrapper li.designer .name-title {
+  padding-top: 1rem;
+  text-align: center;
+}
+.list-wrapper li.designer .name-title .name {
+  font-weight: bold;
+}
+
+.detail-wrapper .images img {
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+  padding: 2px;
+}
+.detail-wrapper .description {
+  font-size: 0.8rem;
+  color: #333;
+}

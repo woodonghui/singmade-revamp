@@ -1,0 +1,36 @@
+<%- partial('partials/designer') %>
+
+<div class="list-wrapper">
+	<div class="row">
+		<h1>recent designs</h1>
+		<ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-5">
+		<% _.each(pieces, function (piece) { %>
+		<li class="piece">
+
+			<a href='/piece/<%= piece.slugId %>'><img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= piece.cloudinary.images[0].public_id %>.jpg" width="100%"></a>
+			<div class="title"><a href='/piece/<%= piece.slugId %>'><%= piece.title %></a></div>
+
+		</li>
+		<% }) %>
+		</ul>
+
+	</div>
+</div>
+
+
+<div class="list-wrapper">
+	<div class="row">
+		<h1>you may like</h1>
+		<ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-5">
+		<% _.each(pieces, function (piece) { %>
+		<li class="piece">
+
+			<a href='/piece/<%= piece.slugId %>'><img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= piece.cloudinary.images[0].public_id %>.jpg" width="100%"></a>
+			<div class="title"><a href='/piece/<%= piece.slugId %>'><%= piece.title %></a></div>
+
+		</li>
+		<% }) %>
+		</ul>
+
+	</div>
+</div>

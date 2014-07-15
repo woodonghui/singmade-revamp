@@ -1,0 +1,27 @@
+<div class="normal-wrapper">
+  <div class="row">
+
+    <div class="small-12 medium-8 large-8 small-centered columns">
+
+      <h1>username</h1>
+      <p>
+      <%= req.session.user.email %>
+      </p>
+
+    </div>
+
+  </div>
+  
+  <% if(req.session.user.userType == 'designer') { %>
+  <%- partial('designer') %>
+  <% } else{ %>
+
+  <div class="row">
+  	<div class="small-12 medium-8 large-8 small-centered columns">
+  <p>
+  	<a href="">Be A Designer</a>
+  </p>
+</div>
+  </div>
+  <% } %>
+</div>

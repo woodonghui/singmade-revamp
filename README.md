@@ -1,0 +1,2 @@
+# singmade
+### a Sails application

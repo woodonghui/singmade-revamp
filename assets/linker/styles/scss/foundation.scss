@@ -1,0 +1,18 @@
+// Foundation by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+@import "bower_components/foundation/scss/foundation/functions";
+$column-gutter:0;
+
+$button-border-width: 0px;
+$button-border-style: none;
+$button-bg: #EE5193;
+
+// Behold, here are all the Foundation components.
+@import
+
+"bower_components/foundation/scss/foundation/components/grid", 
+"bower_components/foundation/scss/foundation/components/alert-boxes",
+"bower_components/foundation/scss/foundation/components/forms", "bower_components/foundation/scss/foundation/components/block-grid", "bower_components/foundation/scss/foundation/components/offcanvas", "bower_components/foundation/scss/foundation/components/visibility";

@@ -1,0 +1,21 @@
+<div class="designer-wrapper" ng-controller="DesignerCtrl">
+	<div class="row">
+		<div class="column small-3 ttt">
+			<a href="/designer/<%= designer.name %>">
+				<% if(designer.avatar != '') { %>
+				<img class="avatar" src="<%= designer.avatar %>">
+				<% } else { %>
+				<img class="avatar" src="http://res.cloudinary.com/boutiquesg/image/upload/v1384063868/singmade-logo-i_vf9sbv.png">
+				<% } %>
+			</a>
+			<div class="name-title"><span class="name"><%= designer.name %></span> | <span class="title"><%= designer.title %></span></div>
+		</div>
+		<div class="column small-9">
+			<div class="profile"><%- designer.profile %></div>
+			<div class="actions">
+				<button class="button">message</a>
+				<button class="button" ng-disabled="isProcessing()" ng-click="follow('<%= designer.name %>')">follow</a>
+			</div>
+		</div>
+	</div>
+</div>

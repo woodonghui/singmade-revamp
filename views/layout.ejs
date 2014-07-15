@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--
+        For demonstration purposes, the `title` is dynamically set here based on
+        your `sails.config.appName` to show that you can inject data into layouts
+        exactly the same way as with your other view templates.
+    -->
+  <title>
+    <%- title %>
+  </title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!--
+
+      Stylesheets
+      ========================
+
+      You can link any CSS, LESS, or image files in your `assets` directory
+      as you would normally: using <link/> tags.
+      
+    -->
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="/linker/styles/css/foundation.min.css">
+  <link rel="stylesheet" href="/linker/styles/css/styles.min.css">
+  <!--STYLES END-->
+
+
+  <!--
+
+      Support for LESS included by default
+      ================================================
+
+      LESS files are automatically compiled when they change using the Gruntfile
+      located in the top-level of this Sails app.  If you run into issues with styles
+      not reloading, check the Sails log output in your console for LESS compilation errors.
+      If necessary, shut down and then lift your app again.
+      
+    -->
+
+</head>
+
+<body>
+  <div class="body-wrapper">
+
+    <div class="header">
+      <div class="row">
+        <div class="column small-6 ltr">
+          <!-- <img class="logo" src="/images/logo.png">
+            singmade.com -->
+        </div>
+        <div class="column small-6 rtl">
+
+          <div class="button-group">
+
+            <% if(req.session.user) { %>
+              <a href="/me">
+                <%=req.session.user.email %>
+              </a>
+               / 
+              <a href="/logout">logout</a>
+              <% } else { %>
+                <a class="button" href="/login">login</a>
+                <a class="button" href="/signup">sign up</a>
+                <% } %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <div class="row">
+        <ul>
+          <li>
+            <a href="/">
+              <span>home</span>
+            </a>
+          </li>
+          <li>
+            <a href="/designer">
+              <span>designers</span>
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <span>trend</span>
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <span>inspire</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="inner-wrapper" ng-app="myApp">
+      <%- body %>
+    </div>
+
+    <div id="pusher" style="height: 226px;"></div>
+
+  </div>
+
+  <div class="footer">
+    <div class="row footer-wrapper ttt">
+      <img class="logo" src="/images/logo.png">
+      <div class="link">
+        <a href="">
+          <span>contact us</span>
+        </a>
+        <a href="">
+          <span>terms & conditions</span>
+        </a>
+        <a href="">
+          <span>privacy</span>
+        </a>
+      </div>
+      <div class="copywrite">©2014 singmade.com, all rights reserved</div>
+    </div>
+  </div>
+
+
+
+  <!--
+
+      Client-side Javascript
+      ========================
+
+      You can import any js files in your `assets` directory as you would 
+      normally: using <script></script> tags.
+
+      Here's an example of importing a few dependencies, in order:
+    -->
+
+  <!-- Bring in the socket.io client -->
+  <!-- then beef it up with some convenience logic for talking to Sails.js -->
+  <!-- listen on socket.io for incoming messages -->
+
+  <!--SCRIPTS-->
+  <script src="/linker/js/socket.io.js"></script>
+  <script src="/linker/js/sails.io.js"></script>
+  <script src="/linker/js/app.js"></script>
+  <script src="/linker/js/vendor/angular.js"></script>
+  <script src="/linker/js/myapp.js"></script>
+  <script src="/linker/js/controllers/myAppControllers.js"></script>
+  <!--SCRIPTS END-->
+
+
+  <!--
+
+      Looking for client-side CoffeeScript or TypeScript?
+      ================================================
+
+      CoffeeScript and TypeScript precompilation are not installed by default,
+      but if you'd like to mix those features in, it is straightforward to
+      `npm install` the relevant grunt community modules and modify your Gruntfile
+      to use them.
+
+    -->
+
+
+
+  <!--
+
+      Another way: The Asset Linker
+      ========================
+
+      Sails supports a Grunt-based asset linker, to automatically inject 
+      <link> and <script> tags, as well any client-side templates you're using
+      into your HTML layouts and views, respecting dependencies.
+
+      You created this Sails app with the asset linker disabled.
+      If you change your mind, check out the docs on the subject:
+      http://sailsjs.org/#!documentation/asset-management
+
+    -->
+
+</body>
+
+</html>

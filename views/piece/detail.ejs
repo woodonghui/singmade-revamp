@@ -1,0 +1,30 @@
+<%- partial( '../designer/partials/designer') %>
+
+<div class="normal-wrapper detail-wrapper">
+	<div class="row">
+	  <h1>
+	    <%=piece.title %>
+	  </h1>
+
+	  <div class="row">
+	  	<div class="small-12 medium-7 column images">
+	  		<% _.each(piece.cloudinary.images, function (image) { %>
+			<img src="http://res.cloudinary.com/boutiquesg/image/upload/<%= image.public_id %>.<%=image.format%>" width="100%">
+			<% }) %>
+	  	</div>
+
+	  	<div class="hide-for-small medium-1 column">
+	  	</div>
+
+	  	<div class="small-12 medium-4 column">
+	  		<p>
+				<a class="button" href="">like</a>
+				<a class="button" href="">share</a>
+			</p>
+	  		<p class="description"><%- piece.description %></p>
+	  	</div>
+
+	  </div>
+	  
+	</div>
+</div>

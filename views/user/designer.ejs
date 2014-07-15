@@ -1,0 +1,72 @@
+<div class="row">
+
+    <div class="small-12 medium-8 large-8 small-centered columns">
+
+      <h1>your details as designer</h1>
+
+      <% if (typeof err!='undefined' ){ %>
+        <div data-alert class="alert-box alert">
+          Please enter all your information.
+          <!-- <a href="#" class="close">&times;</a> -->
+        </div>
+        <% } %>
+
+          <form method="post" enctype="multipart/form-data" action="/user/saveDesigner">
+            <div class="row">
+              <div class="large-12 columns">
+                <label>Name
+                  <input type="text" name="name" placeholder="Name (your name or brand name)" value="<%= typeof req.session.user.designer != 'undefined' ? req.session.user.designer.name : '' %>"/>
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-12 columns">
+                <label>Title
+                  <input type="text" name="title" placeholder="Title, e.g. Fashion Designer" value="<%= typeof req.session.user.designer != 'undefined' ? req.session.user.designer.title : '' %>"/>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-12 columns">
+                <label>Profile
+                  <textarea name="profile" placeholder="Profile"><%= typeof req.session.user.designer != 'undefined' ? req.session.user.designer.profile : '' %></textarea>
+                </label>
+              </div>
+
+            </div>
+
+            <!-- <div class="row">
+              <div class="large-12 columns">
+                <label>Avatar
+                  <input type="text" name="avatar" placeholder="Avatar Link"/>
+                </label>
+              </div>
+            </div> -->
+
+            <div class="row">
+              <% if (req.session.user.designer.avatar != '') { %>
+              <div class="large-2 columns">
+                <img width="100" height="100" style="margin-bottom: 1rem; border-radius: 50px;" src="<%= req.session.user.designer.avatar %>">
+              </div>
+              <% } %>
+
+              <div class="large-10 columns">
+                <label>Avatar
+                  <input type="file" name="avatar" />
+                </label>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="large-12 columns">
+                <button type="submit" class="button">Save</button>
+              </div>
+
+            </div>
+          </form>
+
+    </div>
+
+  </div>

@@ -1,0 +1,24 @@
+
+<div class="list-wrapper">
+	<div class="row">
+		<h1>all designers</h1>
+		<ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+		<% _.each(designers, function (designer) { %>
+		<li class="designer">
+
+			<a href="/designer/<%= designer.name %>">
+
+				<% if(designer.avatar != '') { %>
+				<img class="avatar" src="<%= designer.avatar %>" height="100%" width="100%">
+				<% } else { %>
+				<img class="avatar" src="http://res.cloudinary.com/boutiquesg/image/upload/v1384063868/singmade-logo-i_vf9sbv.png">
+				<% } %>
+
+			<div class="name-title"><span class="name"><%= designer.name %></span> | <span class="title"><%= designer.title %></span></div>
+
+		</li>
+		<% }) %>
+		</ul>
+
+	</div>
+</div>
