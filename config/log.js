@@ -25,3 +25,6 @@ module.exports = {
   }
 
 };
+
+// sails.log.error(errors.badLocalSails(requiredSailsVersion));
+// sails.log.debug(errors.badLocalSails(requiredSailsVersion));

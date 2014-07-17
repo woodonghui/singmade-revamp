@@ -3,41 +3,38 @@
 
     <div class="small-12 medium-6 large-4 small-centered columns">
 
-      <h1>login</h1>
+      <h1><%= __('user login') %></h1>
 
-      <% if (typeof err!='undefined' ){ %>
+      <% if (typeof err!= 'undefined' ){ %>
         <div data-alert class="alert-box alert">
-          Please enter the valid credentials.
-          <!-- <a href="#" class="close">&times;</a> -->
+          <%= __(err) %>
         </div>
-        <% } %>
+      <% } %>
 
           <form method="post" action="/user/auth">
 
             <div class="row">
               <div class="large-12 columns">
-                <label>Username
-                  <input type="text" name="email" placeholder="Email" value="<%= req.body.email || '' %>" />
+                <label><%= __('Email') %>
+                  <input type="text" name="email" placeholder="<%= __('Email') %>" value="<%= req.body.email || '' %>" />
                 </label>
               </div>
-
             </div>
 
             <div class="row">
               <div class="large-12 columns">
-                <label>Password
-                  <input type="password" name="password" placeholder="Password" />
+                <label><%= __('Password') %>
+                  <input type="password" name="password" placeholder="<%= __('Password') %>" />
                 </label>
               </div>
-
             </div>
 
             <div class="row">
               <div class="large-12 columns">
-                <button type="submit" class="button">Login</button>
+                <button type="submit" class="button"><%= __('Login') %></button>
               </div>
-
             </div>
+            
           </form>
 
     </div>

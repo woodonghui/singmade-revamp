@@ -12,6 +12,11 @@
 module.exports.i18n = {
 
   // Which locales are supported?
-  locales: ['en', 'es', 'fr', 'de']
-    
+  locales: ['en', 'cn'],
+
+  defaultLocale: 'en',
+
+  // sets a custom cookie name to parse locale settings from  - defaults to NULL
+  // cookie: 'locale'
+
 };

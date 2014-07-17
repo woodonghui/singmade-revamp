@@ -1,0 +1,23 @@
+{
+
+
+  "user login": "用户登录",
+  "sign up as member": "用户注册",
+  "Register as a/an": "我是",
+  "Amateur": "原创设计爱好者",
+  "Designer": "设计师",
+  "Email": "电子邮件",
+  "Password": "密码",
+  "Register": "注册",
+  "Login": "登录",
+
+
+  "User exists": ":( 此用户名已经被占用。",
+  "Authentication fail": ":( 登陆失败！",
+
+  "Email is required": "请输入电子邮件！",
+  "Enter valid email": "请输入有效的电子邮件！",
+  "Password is required": "请输入密码！"
+
+
+}

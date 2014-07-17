@@ -37,6 +37,16 @@ module.exports = {
 
     designerId: 'string' // foreign key if user is a designer 
 
+  },
+
+  validationMessages: {
+    email: {
+      required: 'Email is required',
+      email: 'Enter valid email'
+    },
+    password: {
+      required: 'Password is required'
+    }
   }
 
 };

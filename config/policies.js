@@ -16,21 +16,11 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': true,
+  '*': 'localize',
 
 
   UserController: {
-    '*': false,
-    find: true,
-
-    // authenticate user login
-    login: true,
-    logout: true,
-    auth: true,
-
-    // post create user
-    signup: true,
-    create: true,
+    '*': 'localize',
 
     me: 'isAuthenticated',
 

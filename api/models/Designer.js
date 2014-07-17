@@ -21,7 +21,7 @@ module.exports = {
     //   defaultsTo: false
     // },
 
-    name: { // not changable
+    name: { // immutable
       type: 'string',
       required: true,
       unique: true
@@ -39,8 +39,6 @@ module.exports = {
 
     avatar: 'string',
     profile: 'string',
-
-
 
 
     // toJSON: function() {

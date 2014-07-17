@@ -1,3 +1,19 @@
 {
-  "Welcome": "Welcome"
+  "user login": "Login",
+  "sign up as member": "Sign up as member",
+  "Register as a/an": "Register as a/an",
+  "Amateur": "Amateur",
+  "Designer": "Designer",
+  "Email": "Email",
+  "Password": "Password",
+  "Register": "Register",
+  "Login": "Login",
+
+  "User exists": "Opps...It seems the email has been registered.",
+
+  "Authentication fail": "Opps...Login failed.",
+
+  "Email is required": "Opps...Email is required.",
+  "Enter valid email": "Opps...Valid email is required.",
+  "Password is required": "Opps...Password is required."
 }

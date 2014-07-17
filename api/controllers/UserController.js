@@ -2,6 +2,8 @@ var cloudinary = require('../utils/cloudinary');
 var _ = require('underscore');
 var Q = require('q');
 
+var errorMessagesParser = require('../utils/errorMessagesParser');
+
 /**
  * UserController
  *
@@ -27,35 +29,52 @@ module.exports = {
    */
   _config: {},
 
-  profile: function(req, res, next) {
-    return res.view();
-  },
 
   signup: function(req, res) {
     if (req.session.user != null) {
-      return res.redirect('/');
+      return res.redirect('/me');
     }
 
     return res.view();
   },
 
   create: function(req, res) {
-    User.create(req.body).done(function(err, user) {
-      if (err) {
-        console.log(err);
-        // return res.json(err);
+
+    User.findOneByEmail(req.body.email).then(function(user){
+      if(user) throw new Error('userExists');
+
+      return User.create(req.body);
+
+    }).then(function(user){
+
+      return res.redirect('/login'); 
+
+    }).fail(function(err){
+
+      if(err.message == 'userExists'){
+        return res.view('user/signup', {err: ['User exists']});
+      }
+
+      if(err.ValidationError) {
+    
+        var error =  errorMessagesParser.parse(User, err);
+
         return res.view('user/signup', {
-          err: err
+          err: error
         });
       }
-      return res.redirect('/login');
+
+      return res.view('500');
+
     });
+
   },
 
 
   login: function(req, res) {
     if (req.session.user != null) {
-      return res.redirect('/');
+
+      return res.redirect('/me');
     }
 
     return res.view();
@@ -82,11 +101,9 @@ module.exports = {
       })
       .fail(function(err) {
 
-        console.log(req);
-
         if (err.message == 'authenticationFail')
           return res.view('user/login', {
-            err: 'authentication fail'
+            err: 'Authentication fail'
           });
         return res.view('500');
       });
