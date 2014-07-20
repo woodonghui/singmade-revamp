@@ -1,3 +1,4 @@
+var Q = require('q');
 /**
  * User
  *
@@ -27,6 +28,8 @@ module.exports = {
       required: true
     },
 
+    resetPasswordToken: 'string',
+
     iFollows: 'array',
     iLikes: 'array',
 
@@ -35,7 +38,24 @@ module.exports = {
       defaultsTo: 'user'
     }, // "designer", "user"
 
-    designerId: 'string' // foreign key if user is a designer 
+    designerId: 'string', // foreign key if user is a designer 
+
+
+    // Q promise implementation of save()
+    saveQ: function() {
+      var deferred = Q.defer();
+
+      this.save(function(err, user) {
+
+        if (!user) {
+          deferred.reject(err);
+        } else {
+          deferred.resolve(user);
+        }
+
+      });
+      return deferred.promise;
+    }
 
   },
 

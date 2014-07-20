@@ -15,5 +15,7 @@
 
   "Email is required": "Opps...Email is required.",
   "Enter valid email": "Opps...Valid email is required.",
-  "Password is required": "Opps...Password is required."
+  "Password is required": "Opps...Password is required.",
+
+  "Reset password email is sent": "An email has been sent with instructions for resetting your password. If you do not receive it within an hour or two, check your spam folder."
 }

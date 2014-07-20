@@ -16,7 +16,18 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'logout'
   },
-
+  'get /change-password': {
+    controller: 'UserController',
+    action: 'resetPasswordRequest'
+  },
+  'get /forgot-password': {
+    controller: 'UserController',
+    action: 'resetPasswordRequest'
+  },
+  'get /reset-password': {
+    controller: 'UserController',
+    action: 'resetPassword'
+  },
 
   'get /me': {
     controller: 'UserController',

@@ -12,7 +12,8 @@
     "cloudinary": "^1.0.10",
     "underscore": "^1.6.0",
     "q": "^1.0.1",
-    "shortid": "~2.0.1"
+    "shortid": "~2.0.1",
+    "mandrill-api": "^1.0.40"
   },
   "scripts": {
     "start": "node app.js",
