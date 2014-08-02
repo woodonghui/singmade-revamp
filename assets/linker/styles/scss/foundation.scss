@@ -3,7 +3,10 @@
 // Licensed under MIT Open Source
 // Make sure the charset is set appropriately
 @charset "UTF-8";
+
 @import "bower_components/foundation/scss/foundation/functions";
+
+// _settings
 $column-gutter:0;
 
 $button-border-width: 0px;

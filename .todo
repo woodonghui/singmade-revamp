@@ -1,7 +1,8 @@
 vision and domain
 ----------------------
 	- name of the website
-	- what's the vision of the website
+	- vision: singmade is a fashion designer coummunity of sharing designs, finding inspiration and interacting with your followers.
+	- mission: the largest designer community in Asia
 	- "all about originality"
 	- web font
 
@@ -23,3 +24,15 @@ programming
 
 	- designer managing brand
 	- designer post journals
+
+
+testing and continuous integration
+--------------------------------------
+
+
+
+cool ideas
+-------------------------
+red pen like image tagging function (https://redpen.io/vkf85897aa4f5135d6)
+model photoshot with clothings from different designers, tag it and put on home page
+

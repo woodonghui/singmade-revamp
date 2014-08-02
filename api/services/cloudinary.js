@@ -15,7 +15,7 @@ exports.upload = function(path) {
   var deferred = Q.defer();
 
   cloudinary.uploader.upload(path, function(result) {
-    console.log(result);
+    sails.log.debug(result);
 
     if (!result) {
       deferred.reject(new Error());

@@ -148,6 +148,9 @@ html body {
     /*padding: 20px;*/
     background: white;
 }
+
+
+
 .normal-wrapper {
     padding: 2rem 1rem;
     h1 {
@@ -157,6 +160,13 @@ html body {
         color: #999;
     }
 }
+
+
+
+/**
+* Designer banner
+* 
+*/
 .designer-wrapper {
     color: white;
     padding: 2rem 1rem;
@@ -184,6 +194,12 @@ html body {
         padding: 1rem;
     }
 }
+
+/** 
+* List of designers
+* /designer
+* 
+*/
 .list-wrapper {
     padding: 2rem 1rem;
     h1 {
@@ -221,6 +237,7 @@ html body {
             transform: scale(1.1, 1.1);
         }
     }
+
     li.designer {
         font-size: 0.8rem;
         color: #333;
@@ -243,6 +260,12 @@ html body {
     }
 }
 
+
+/** 
+* Piece detail view
+* /piece/detail
+* 
+*/
 .detail-wrapper {
     .images img{
         margin-bottom: 10px;

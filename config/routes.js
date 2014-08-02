@@ -16,18 +16,16 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'logout'
   },
-  'get /change-password': {
-    controller: 'UserController',
-    action: 'resetPasswordRequest'
-  },
-  'get /forgot-password': {
-    controller: 'UserController',
-    action: 'resetPasswordRequest'
-  },
-  'get /reset-password': {
-    controller: 'UserController',
-    action: 'resetPassword'
-  },
+
+
+  /**
+   *  UserController
+   *  password related
+   */
+  'get /change-password': 'UserController.resetPasswordRequest',
+  'get /forgot-password': 'UserController.resetPasswordRequest',
+  'get /reset-password': 'UserController.resetPassword',
+
 
   'get /me': {
     controller: 'UserController',
@@ -62,11 +60,19 @@ module.exports.routes = {
   },
 
 
-  'get /piece/:slug': {
-    controller: 'PieceController',
-    action: 'detail'
-  }
 
+  /**
+   * PieceController
+   *
+   */
+  'get /me/piece': 'PieceController.list',
+  'get /me/piece/add': 'PieceController.edit',
+  'get /me/piece/edit/:id': 'PieceController.edit',
+  'get /me/piece/images/:id': 'PieceController.images',
+  'post /me/piece/images/:id': 'PieceController.upload',
+  'get /me/piece/images/destroy/:id': 'PieceController.destroy',
+
+  'get /piece/:slug': 'PieceController.detail'
 
 
   /*

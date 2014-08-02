@@ -154,6 +154,10 @@ html body .body-wrapper {
   color: #999;
 }
 
+/**
+* Designer banner
+* 
+*/
 .designer-wrapper {
   color: white;
   padding: 2rem 1rem;
@@ -182,6 +186,11 @@ html body .body-wrapper {
   padding: 1rem;
 }
 
+/** 
+* List of designers
+* /designer
+* 
+*/
 .list-wrapper {
   padding: 2rem 1rem;
 }
@@ -241,6 +250,11 @@ html body .body-wrapper {
   font-weight: bold;
 }
 
+/** 
+* Piece detail view
+* /piece/detail
+* 
+*/
 .detail-wrapper .images img {
   margin-bottom: 10px;
   border: 1px solid #eee;

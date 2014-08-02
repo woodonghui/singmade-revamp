@@ -11,11 +11,6 @@ module.exports = {
 
   attributes: {
 
-    // userId: {  
-    //  type: 'string',
-    //  required: true,
-    //  unique: true
-    // },
 
     email: { // unique user id  
       type: 'email',
@@ -35,10 +30,10 @@ module.exports = {
 
     userType: {
       type: 'string',
-      defaultsTo: 'user'
-    }, // "designer", "user"
+      defaultsTo: 'user' // "designer" or "user"
+    },
 
-    designerId: 'string', // foreign key if user is a designer 
+    designerId: 'string', // Foreign Key --> Designer.id 
 
 
     // Q promise implementation of save()

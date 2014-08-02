@@ -5,7 +5,12 @@
 
       <% if (typeof info != 'undefined' ){ %>
           <div data-alert class="alert-box info">
-            <%= __(info) %> <a href="<%= redirect %>">Action</a>
+            <%= __(info) %>
+
+            <p>
+            	<a href="<%= redirect %>"><%= typeof action == 'undefined' ? redirect : action %></a>
+            </p>
+            
           </div>
       <% } %>
 

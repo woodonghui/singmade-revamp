@@ -7,7 +7,11 @@
 		<% _.each(pieces, function (piece) { %>
 		<li class="piece">
 
-			<a href='/piece/<%= piece.slugId %>'><img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= piece.cloudinary.images[0].public_id %>.jpg" width="100%"></a>
+			<a href='/piece/<%= piece.slugId %>'>
+				<% if (typeof piece.images != 'undefined' && piece.images.length > 0) { %>
+				<img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= piece.images[0].public_id %>.jpg" width="100%">
+				<% } %>
+			</a>
 			<div class="title"><a href='/piece/<%= piece.slugId %>'><%= piece.title %></a></div>
 
 		</li>
@@ -25,7 +29,11 @@
 		<% _.each(pieces, function (piece) { %>
 		<li class="piece">
 
-			<a href='/piece/<%= piece.slugId %>'><img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= piece.cloudinary.images[0].public_id %>.jpg" width="100%"></a>
+			<a href='/piece/<%= piece.slugId %>'>
+				<% if (typeof piece.images != 'undefined' && piece.images.length > 0) { %>
+				<img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= piece.images[0].public_id %>.jpg" width="100%">
+				<% } %>
+			</a>
 			<div class="title"><a href='/piece/<%= piece.slugId %>'><%= piece.title %></a></div>
 
 		</li>

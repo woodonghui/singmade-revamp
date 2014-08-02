@@ -1,12 +1,3 @@
-var _ = require('underscore');
-var shortid = require('shortid');
-var Q = require('q');
-
-var cloudinary = require('../services/cloudinary');
-var mailer = require('../services/mailer');
-
-var errorMessagesParser = require('../utils/errorMessagesParser');
-
 /**
  * UserController
  *
@@ -23,6 +14,16 @@ var errorMessagesParser = require('../utils/errorMessagesParser');
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+
+var _ = require('underscore');
+var shortid = require('shortid');
+var Q = require('q');
+
+var cloudinary = require('../services/cloudinary');
+var mailer = require('../services/mailer');
+
+var errorMessagesParser = require('../utils/errorMessagesParser');
+
 
 module.exports = {
 
@@ -83,7 +84,6 @@ module.exports = {
 
   login: function(req, res) {
     if (req.session.user != null) {
-
       return res.redirect('/me');
     }
 
@@ -134,34 +134,37 @@ module.exports = {
     User.findOneByEmail(req.session.user.email)
       .then(function(user) {
 
-        if (user.userType != 'designer' || !user.designerId) return res.view();
+        if (user.userType != 'designer' || !user.designerId)
+          return res.view();
 
         return Designer.findOneById(user.designerId);
-
       }).then(function(designer) {
         req.session.user['designer'] = designer;
         return res.view();
       })
       .fail(function(err) {
-        return res.view('500');
+        return res.serverError(err);
       });
   },
 
 
 
-  // GET forgot password request
-  // GET change password request
+  /**
+   *  @GET
+   *    /forgot-password
+   *    /change-password
+   *
+   *  @description
+   *  request to change/reset password
+   *
+   */
   resetPasswordRequest: function(req, res) {
     if (!_.isEmpty(req.session.user)) {
       var user = req.session.user;
-
       User.findOneByEmail(user.email).then(function(user) {
-
         user.resetPasswordToken = shortid.generate();
         return user.saveQ();
-
       }).then(function(user) {
-
         var template_content = [{
           "name": "url",
           "content": "http://localhost:3000/reset-password?email=" + user.email + "&resetPasswordToken=" + user.resetPasswordToken
@@ -170,31 +173,28 @@ module.exports = {
         mailer.sendTemplate('reset-password', template_content, null, user.email, null);
 
         return res.view('info', {
-          info: 'Reset password email is sent',
-          redirect: '/login'
+          info: 'Reset password email is sent'
         });
 
       }).fail(function(err) {
-
-        return res.view('500')
+        return res.serverError(err);
       });
 
     } else {
-      res.view();
+      return res.view();
     }
   },
 
 
   /**
+   *@description
    *  generate scurity token for password reset
-   *  stored as user.resetPasswordToken
+   *  stored in user.resetPasswordToken
    */
   createResetPasswordToken: function(req, res) {
     var email = req.body.email;
     Q.fcall(function() {
-
       if (_.isEmpty(email)) throw new Error('emailIsRequired');
-
       return User.findOneByEmail(email);
 
     }).then(function(user) {
@@ -221,20 +221,18 @@ module.exports = {
     }).fail(function(err) {
 
       if (err.message == 'emailIsRequired') {
-        return res.view('user/resetPassword', {
+        return res.view('user/resetPasswordRequest', {
           err: 'Email is required'
         });
       }
 
       if (err.message == 'noUserExists') {
-        return res.view('user/resetPassword', {
+        return res.view('user/resetPasswordRequest', {
           err: 'No user exists'
         });
       }
 
-      sails.log.error(err);
-
-      return res.view('500');
+      return res.serverError(err);
 
     });
   },
@@ -309,7 +307,40 @@ module.exports = {
 
 
 
-  // designer related
+
+  /*
+   *  DESIGNER
+   *
+   *  Desgner methods
+   */
+
+  // GET be a designer
+
+  beADesigner: function(req, res) {
+    var sessionUser = req.session.user;
+
+    // Whether is the user already a designer
+    if (sessionUser.userType == 'user') {
+      User.findOneByEmail(sessionUser.email).then(function(user) {
+
+        user.userType = 'designer';
+        return user.saveQ();
+
+      }).then(function(user) {
+
+        return res.redirect('/me');
+
+      }).fail(function(err) {
+        return res.view('500');
+
+      });
+    } else {
+      return res.redirect('/me');
+    }
+  },
+
+
+  // POST save designer profile
 
   saveDesigner: function(req, res) {
     var sessionUser = req.session.user;
@@ -370,10 +401,6 @@ module.exports = {
 
 
 
-
-
-
-
   // api calls
 
   follow: function(req, res) {
@@ -408,26 +435,7 @@ module.exports = {
 
     });
 
-    // Designer.findOneByName(name).then(function(designer) {
-    //   if (!designer) throw new Error();
-    //   return designer;
-    // }).then(function(designer) {
 
-    //   var follower = req.session.user.email;
-    //   if (designer.followers == null) designer.followers = [];
-    //   designer.followers.push(follower);
-    //   return designer.save();
-    //   // runtime error here
-    //   // save not Q promise???
-    // }).then(function(err) {
-    //   return res.json({
-    //     success: true
-    //   });
-    // }).fail(function(err) {
-    //   return res.json({
-    //     error: true
-    //   });
-    // });
   },
 
   unfollow: function(req, res) {

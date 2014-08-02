@@ -41,6 +41,10 @@ module.exports = {
     profile: 'string',
 
 
+    // new fields
+    country: 'string',
+
+
     // toJSON: function() {
     //   var obj = this.toObject();
     //   if (!obj.avatar)

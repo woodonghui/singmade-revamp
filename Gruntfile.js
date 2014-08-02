@@ -139,6 +139,7 @@ module.exports = function(grunt) {
   // added by donghui
   grunt.loadTasks('node_modules/grunt-bowercopy/tasks');
   grunt.loadTasks('node_modules/grunt-contrib-sass/tasks');
+  grunt.loadTasks('node_modules/grunt-casperjs/tasks');
 
   // Project configuration.
   grunt.initConfig({
@@ -425,19 +426,26 @@ module.exports = function(grunt) {
 
     watch: {
       api: {
-
         // API files to watch:
         files: ['api/**/*']
       },
       assets: {
-
         // Assets to watch:
         files: ['assets/**/*'],
 
         // When assets are changed:
         tasks: ['compileAssets', 'linkAssets']
       }
+    },
+
+    /*casperjs test*/
+    casperjs: {
+      options: {
+        casperjsOptions: ['--url=http://localhost:3000', '--capturefolder=test/capture']
+      },
+      files: ['test/user/**/*.js']
     }
+
   });
 
   // When Sails is lifted:
@@ -458,7 +466,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('linkAssets', [
-
     // Update link/script/template references in `assets` index.html
     'sails-linker:devJs',
     'sails-linker:devStyles',
@@ -494,6 +501,10 @@ module.exports = function(grunt) {
     'sails-linker:prodJsJADE',
     'sails-linker:prodStylesJADE',
     'sails-linker:devTplJADE'
+  ]);
+
+  grunt.registerTask('test', [
+    'casperjs'
   ]);
 
   // When API files are changed:
