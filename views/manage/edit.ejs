@@ -1,0 +1,51 @@
+<div class="normal-wrapper">
+	<div class="row">
+	  <h1>
+	  	<a href="/me/piece">my designs</a> 
+	  	/ 
+	  	<%= typeof piece.title != 'undefined' ? piece.title : 'add piece' %>
+	  </h1>
+
+	  <% if (typeof err != 'undefined' ){ %>
+        <% _.each(err, function(error) { %> 
+          <div data-alert class="alert-box alert">
+            <%= __(error) %>
+          </div>
+        <% }) %>
+      <% } %>
+
+	  <form action="/me/piece/update/<%= typeof piece.id != 'undefined' ? piece.id : '' %>" method="post">
+
+	  	<div class="row">
+          <div class="large-12 columns" style="text-align:right">
+            <a class="button" href="/me/piece/delete/<%= typeof piece.id != 'undefined' ? piece.id : '' %>">delete</a>
+          </div>
+        </div>
+
+	  	<div class="row">
+	  	  <div class="large-12 columns">
+	  	    <label>title
+	  	      <input type="text" name="title" placeholder="title" value="<%= typeof piece.title != 'undefined' ? piece.title : '' %>"/>
+	  	    </label>
+	  	  </div>
+	  	</div>
+
+	  	<div class="row">
+	  	  <div class="large-12 columns">
+	  	    <label>description
+	  	      <textarea name="description" placeholder="description" rows="10"><%= typeof piece.description != 'undefined' ? piece.description : '' %></textarea>
+	  	    </label>
+	  	  </div>
+	  	</div>
+    
+        <div class="row">
+          <div class="large-12 columns">
+            <button class="button" type="submit">next, then upload images</button>
+          </div>
+
+        </div>
+
+      </form>
+
+	</div>
+</div>
