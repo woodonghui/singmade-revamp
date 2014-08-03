@@ -18,10 +18,8 @@ module.exports = function(req, res, next) {
 
   if (req.wantsJSON) {
     return res.json({
-      error: 'isAuthenticated fail',
-      action: '/login',
-      url: req.url
-    });
+      message: 'login required',
+    }, 403);
   }
 
   return res.redirect('/user/login');

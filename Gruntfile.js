@@ -443,7 +443,7 @@ module.exports = function(grunt) {
       options: {
         casperjsOptions: ['--url=http://localhost:3000', '--capturefolder=test/capture']
       },
-      files: ['test/user/**/*.js']
+      files: ['test/browser/**/*.js']
     }
 
   });

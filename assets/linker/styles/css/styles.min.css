@@ -41,7 +41,7 @@ hr.row {
   margin: 0;
   background: #EE5193;
   display: inline-block;
-  color: white;
+  color: white !important;
   text-transform: uppercase;
   text-decoration: none;
   font-size: 0.8rem;
@@ -165,6 +165,7 @@ html body .body-wrapper {
   background: black;
 }
 .designer-wrapper img.avatar {
+  background: white;
   width: 150px;
   border-radius: 75px;
   -webkit-border-radius: 75px;
@@ -241,6 +242,9 @@ html body .body-wrapper {
 }
 .list-wrapper li.designer img {
   border-radius: 200px;
+}
+.list-wrapper li.designer img.default {
+  background: black;
 }
 .list-wrapper li.designer .name-title {
   padding-top: 1rem;

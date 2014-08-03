@@ -1,56 +1,92 @@
 /**
- * Policy mappings (ACL)
- *
- * Policies are simply Express middleware functions which run **before** your controllers.
- * You can apply one or more policies to a given controller, or protect just one of its actions.
- *
- * Any policy file (e.g. `authenticated.js`) can be dropped into the `/policies` folder,
- * at which point it can be accessed below by its filename, minus the extension, (e.g. `authenticated`)
- *
- * For more information on policies, check out:
- * http://sailsjs.org/#documentation
- */
+* Policy mappings(ACL) 
+  * Policies are simply Express middleware functions which run * * before * * your controllers.*You can apply one or more policies to a given controller, or protect just one of its actions.*
+  * Any policy file(e.g.
+  * `authenticated.js`) can be dropped into the `/policies` folder, 
+  * at which point it can be accessed below by its filename, minus the extension, (e.g.
+  `authenticated`) 
+*/
 
 
 module.exports.policies = {
 
-  // Default policy for all controllers and actions
-  // (`true` allows public access) 
   '*': 'localize',
 
 
   UserController: {
-    '*': 'localize',
+    '*': false,
 
-    me: 'isAuthenticated',
+    /**
+     *  public access allowed
+     *
+     */
+    signup: 'localize',
+    create: 'localize',
+    login: 'localize',
+    auth: 'localize',
+    logout: 'localize',
 
-    // user social actions
-    follow: 'isAuthenticated',
-    unfollow: 'isAuthenticated',
+    resetPasswordRequest: 'localize',
+    createResetPasswordToken: 'localize',
+    resetPassword: 'localize',
+    updatePassword: 'localize',
+
+    /**
+     *  access allowed only after logged in
+     *
+     */
+    me: ['localize', 'isAuthenticated'],
+
+    follow: ['localize', 'isAuthenticated'],
+    unfollow: ['localize', 'isAuthenticated'],
+    ifollow: ['localize', 'isAuthenticated']
 
     // create or update designer
-    saveDesigner: ['isAuthenticated', 'isEligibleToBeDesigner']
+    // saveDesigner: ['isAuthenticated', 'isEligibleToBeDesigner']
+  },
 
-  }
+  ManageController: {
+    '*': false,
+
+    /**
+     *  private access only for designer
+     *
+     */
+    list: ['localize', 'isAuthenticated', 'isDesigner'],
+    save: ['localize', 'isAuthenticated', 'isDesigner'],
+
+    /**
+     *  private access only for piece owner
+     *
+     */
+    edit: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
+    update: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
+    delete: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
+    images: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
+    upload: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
+    destroy: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
+
+
+  },
 
 
   /*
-	// Here's an example of adding some policies to a controller
-	RabbitController: {
+  	// Here's an example of adding some policies to a controller
+  	RabbitController: {
 
-		// Apply the `false` policy as the default for all of RabbitController's actions
-		// (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
-		'*': false,
+  		// Apply the `false` policy as the default for all of RabbitController's actions
+  		// (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
+  		'*': false,
 
-		// For the action `nurture`, apply the 'isRabbitMother' policy 
-		// (this overrides `false` above)
-		nurture	: 'isRabbitMother',
+  		// For the action `nurture`, apply the 'isRabbitMother' policy 
+  		// (this overrides `false` above)
+  		nurture	: 'isRabbitMother',
 
-		// Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
-		// before letting any users feed our rabbits
-		feed : ['isNiceToAnimals', 'hasRabbitFood']
-	}
-	*/
+  		// Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
+  		// before letting any users feed our rabbits
+  		feed : ['isNiceToAnimals', 'hasRabbitFood']
+  	}
+  	*/
 };
 
 

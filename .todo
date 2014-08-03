@@ -9,20 +9,23 @@ vision and domain
 programming
 ----------------------
 	- home page design
+	- wire up links
 
-	- login/sign up
-	- activate account/messaging integration
-	- forgot password/messaging integration
+done	- login/sign up
+done	- activate account/messaging integration
+done	- forgot password/messaging integration
 
 	- designer registration
 	- designer updating profile
 	
 	- view counts
-	- follow
+done	- follow
 	- like
 	- share
+	- message/comment
+	
 
-	- designer managing brand
+done	- designer managing pieces
 	- designer post journals
 
 
@@ -35,4 +38,12 @@ cool ideas
 -------------------------
 red pen like image tagging function (https://redpen.io/vkf85897aa4f5135d6)
 model photoshot with clothings from different designers, tag it and put on home page
+
+upload resumable videos/socket.io/
+
+message/realtime comm
+
+alumni collection publishing tools
+
+rewards of sharing 
 

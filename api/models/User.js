@@ -11,7 +11,6 @@ module.exports = {
 
   attributes: {
 
-
     email: { // unique user id  
       type: 'email',
       required: true,
@@ -25,18 +24,37 @@ module.exports = {
 
     resetPasswordToken: 'string',
 
-    iFollows: 'array',
-    iLikes: 'array',
 
+    /**
+     *
+     *  @description
+     *  "designer" or "user"
+     *
+     */
     userType: {
       type: 'string',
-      defaultsTo: 'user' // "designer" or "user"
+      defaultsTo: 'user'
     },
 
-    designerId: 'string', // Foreign Key --> Designer.id 
 
 
-    // Q promise implementation of save()
+    /**
+     *
+     *  @description
+     *  refer to Designer id
+     *  once created, read only
+     *
+     */
+    designerId: 'string',
+
+
+    /**
+     *
+     *  @description
+     *  Q promise implementation of save()
+     *  HOWEVER, IT DOESN'T WORK WHEN SAVE ARRAY
+     *
+     */
     saveQ: function() {
       var deferred = Q.defer();
 

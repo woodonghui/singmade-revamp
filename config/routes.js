@@ -4,47 +4,35 @@ module.exports.routes = {
     view: 'home/index'
   },
 
-  'get /login': {
-    controller: 'UserController',
-    action: 'login'
-  },
-  'get /signup': {
-    controller: 'UserController',
-    action: 'signup'
-  },
-  'get /logout': {
-    controller: 'UserController',
-    action: 'logout'
-  },
-
 
   /**
    *  UserController
-   *  password related
    */
+
+  'get /login': 'UserController.login',
+  'get /signup': 'UserController.signup',
+  'get /logout': 'UserController.logout',
+
   'get /change-password': 'UserController.resetPasswordRequest',
   'get /forgot-password': 'UserController.resetPasswordRequest',
   'get /reset-password': 'UserController.resetPassword',
 
+  'get /me': 'UserController.me',
 
-  'get /me': {
-    controller: 'UserController',
-    action: 'me'
-  },
-
-
-  // api calls
-  'get /user/follow/:name': {
-    controller: 'UserController',
-    action: 'follow'
-  },
-  'get /user/unfollow/:name': {
-    controller: 'UserController',
-    action: 'unfollow'
-  },
+  /**
+   *  UserController
+   *  social actions
+   *  follow/unfollow designer
+   */
+  'get /user/follow/:designer': 'UserController.follow',
+  'get /user/unfollow/:designer': 'UserController.unfollow',
 
 
 
+  /**
+   *  DesignerController
+   *
+   */
   'get /designers': {
     controller: 'DesignerController',
     action: 'find'
@@ -61,18 +49,39 @@ module.exports.routes = {
 
 
 
+
+
+  /**
+   *  ManageController
+   *
+   */
+  'get /me/piece': 'ManageController.list',
+  'get /me/piece/add': {
+    view: 'manage/add'
+  },
+
+  'get /me/piece/edit/:id': 'ManageController.edit',
+  'get /me/piece/delete/:id': 'ManageController.delete',
+  'post /me/piece/save': 'ManageController.save',
+  'post /me/piece/update/:id': 'ManageController.update',
+
+  'get /me/piece/images/:id': 'ManageController.images',
+  'post /me/piece/images/:id': 'ManageController.upload',
+  'get /me/piece/images/destroy/:id': 'ManageController.destroy',
+
+
   /**
    * PieceController
    *
    */
-  'get /me/piece': 'PieceController.list',
-  'get /me/piece/add': 'PieceController.edit',
-  'get /me/piece/edit/:id': 'PieceController.edit',
-  'get /me/piece/images/:id': 'PieceController.images',
-  'post /me/piece/images/:id': 'PieceController.upload',
-  'get /me/piece/images/destroy/:id': 'PieceController.destroy',
+  'get /piece/:slug': 'PieceController.detail',
 
-  'get /piece/:slug': 'PieceController.detail'
+
+
+
+
+
+
 
 
   /*

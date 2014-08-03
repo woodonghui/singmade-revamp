@@ -6,6 +6,8 @@
  * @docs    :: http://sailsjs.org/#!documentation/models
  */
 
+var Q = require('q');
+
 module.exports = {
 
   attributes: {
@@ -21,20 +23,33 @@ module.exports = {
     //   defaultsTo: require('shortid').generate()
     // },
 
-    title: 'string',
+    title: {
+      type: 'string',
+      required: true
+    },
     description: 'string',
-    category: 'string', // clothes, home
-
     images: 'array',
 
+
+    /**
+     *
+     *  @description
+     *  refer to Designer name
+     *
+     */
     designer: {
       type: 'string',
       required: true
-    }, //Foreign Key --> Designer.name
+    },
 
     // designerId: 'string'
 
+
+
+    // category: 'string', // clothes, home
     // collection: 'string', //group pieces into collections like year, style
+
+
 
     // Q promise implementation of save()
     saveQ: function() {
@@ -50,22 +65,13 @@ module.exports = {
       return deferred.promise;
     }
 
-  }
-
-};
-
-
-/*
-
-  // image storage
-  cloudinary: {
-    images: [{
-      public_id: { type: String, required: true },
-      size: in KB/MB,
-      format: { type: String, required: true, default: 'jpg' },
-      width: { type: Number, required: true },
-      height: { type: Number, required: true }
-    }],
   },
 
-*/
+  validationMessages: {
+    title: {
+      required: 'title is required'
+    }
+  }
+
+
+};

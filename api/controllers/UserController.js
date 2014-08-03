@@ -34,67 +34,69 @@ module.exports = {
   _config: {},
 
 
+  /**
+   *  @GET
+   *    /signup
+   *
+   *  @description
+   *  description
+   *
+   */
   signup: function(req, res) {
-    if (req.session.user != null) {
-      return res.redirect('/me');
-    }
-
+    if (req.session.user != null) return res.redirect('/me');
     return res.view();
   },
 
 
-  // POST create a user
+  /**
+   *  @POST
+   *    /user/create
+   *
+   *  @description
+   *  create a user
+   *
+   */
   create: function(req, res) {
-
     User.findOneByEmail(req.body.email).then(function(user) {
-      if (user) throw new Error('userExists');
-
-      return User.create(req.body);
-
+      if (user) throw new Error('user_message_user_exists');
+      return User.create({
+        email: req.body.email,
+        password: req.body.password
+      });
     }).then(function(user) {
-
       return res.view('info', {
         info: 'Sign up successfully',
+        action: 'login now',
         redirect: '/login'
       });
-
     }).fail(function(err) {
-
-      if (err.message == 'userExists') {
+      if (err.message == 'user_message_user_exists') {
         return res.view('user/signup', {
-          err: ['User exists']
+          err: [err.message]
         });
       }
 
       if (err.ValidationError) {
-
         var error = errorMessagesParser.parse(User, err);
-
         return res.view('user/signup', {
           err: error
         });
       }
-
-      return res.view('500');
-
+      return res.serverError(err);
     });
 
   },
 
 
   login: function(req, res) {
-    if (req.session.user != null) {
-      return res.redirect('/me');
-    }
-
+    if (req.session.user != null) return res.redirect('/me');
     return res.view();
   },
 
-  auth: function(req, res) {
 
+  auth: function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
-
     User.findOneByEmail(email)
       .then(function(user) {
 
@@ -119,21 +121,32 @@ module.exports = {
       });
   },
 
+
+  /**
+   *  @GET
+   *    /logout
+   *
+   *  @description
+   *  user logout
+   *
+   */
   logout: function(req, res) {
-
-    if (req.session.user != null) {
-      delete req.session['user'];
-      // req.session.user = null; 
-    }
-
+    if (req.session.user != null) delete req.session['user'];
     return res.redirect('/user/login');
   },
 
 
+  /**
+   *  @GET
+   *    /me
+   *
+   *  @description
+   *  user profile page
+   *
+   */
   me: function(req, res) {
     User.findOneByEmail(req.session.user.email)
       .then(function(user) {
-
         if (user.userType != 'designer' || !user.designerId)
           return res.view();
 
@@ -239,71 +252,205 @@ module.exports = {
 
 
   /**
-   *  GET reset password
+   *  @GET
+   *    /reset-password?email={email}&resetPasswordToken={token}
+   *
+   *  @description
+   *  display reset password form
+   *
    */
   resetPassword: function(req, res) {
     var email = req.query.email;
     var token = req.query.resetPasswordToken;
     Q.fcall(function() {
-
-      if (_.isEmpty(email) || _.isEmpty(token)) throw new Error('invalidToken');
-
+      if (_.isEmpty(email) || _.isEmpty(token))
+        throw new Error('invalidToken');
       return User.findOneByEmail(email);
-
     }).then(function(user) {
-      // sails.log.debug(user);
-
-      if (!user || user.resetPasswordToken != token) throw new Error('invalidToken');
-
+      if (!user || user.resetPasswordToken != token)
+        throw new Error('invalidToken');
       return res.view({
         email: user.email,
         token: user.resetPasswordToken
       });
-
     }).fail(function(err) {
-      if (err.message == 'invalidToken') return res.view('info', {
-        info: 'Invalid token',
-        redirect: '/login'
-      });
-      return res.view('500');
+      if (err.message == 'invalidToken')
+        return res.view('info', {
+          info: 'Invalid token'
+        });
+      return res.serverError(err);
     });
   },
 
-  // POST update password
+
+  /**
+   *  @POST
+   *    /user/updatePassword
+   *
+   *  @description
+   *  update password
+   *
+   */
   updatePassword: function(req, res) {
     var email = req.body.email;
     var token = req.body.token;
     var password = req.body.password;
 
     Q.fcall(function() {
-      if (_.isEmpty(email) || _.isEmpty(token)) throw new Error('badRequest');
-      if (_.isEmpty(password)) throw new Error('passwordIsRequired');
-
+      if (_.isEmpty(email) || _.isEmpty(token))
+        throw new Error('badRequest');
+      if (_.isEmpty(password))
+        throw new Error('passwordIsRequired');
       return User.findOneByEmail(email);
-
     }).then(function(user) {
-      if (!user || user.resetPasswordToken != token) throw new Error('badRequest');
+      if (!user || user.resetPasswordToken != token)
+        throw new Error('badRequest');
 
       user.password = password;
-      return user.saveQ()
-
+      return user.saveQ();
     }).then(function(user) {
-
       return res.view('info', {
-        info: 'Password changed',
+        info: 'password changed',
+        action: 'go back to login',
         redirect: '/login'
-      })
-
-    }).fail(function(err) {
-
-      if (err.message == 'badRequest') return res.view('info', {
-        info: 'Invalid request',
-        redirect: '/'
       });
 
-      return res.view('500')
+    }).fail(function(err) {
+      if (err.message == 'passwordIsRequired') {
+        return res.view('user/resetPassword', {
+          email: email,
+          token: token,
+          err: 'password is required'
+        });
+      }
+      if (err.message == 'badRequest')
+        return res.view('info', {
+          info: 'invalid request'
+        });
+      return res.serverError(err);
     });
   },
+
+
+
+
+  /**
+   *  social actions
+   *  ===========================================
+   *
+   */
+
+  /**
+   *  @GET
+   *    /user/ifollow
+   *
+   *  @description
+   *  description
+   *
+   */
+  ifollow: function(req, res) {
+    var follower = req.session.user.email;
+    Designer.find({
+      followers: follower
+    }).then(function(designers) {
+      return res.json(designers);
+    }).fail(function(err) {
+      return res.serverError(err);
+    });
+  },
+
+
+  /**
+   *  @GET
+   *    /user/follow/:designer
+   *
+   *  @description
+   *  follow designer
+   *
+   */
+  follow: function(req, res) {
+    var name = req.params.designer;
+
+    // find the designer instance
+    Designer.findOneByName(name).then(function(designer) {
+      if (!designer)
+        return res.json({
+          message: 'designer not exists'
+        }, 400);
+
+      return designer;
+    }).then(function(designer) {
+
+      // initialize followers array if it is empty
+      var follower = req.session.user.email;
+      if (!designer.followers) designer.followers = [];
+
+      // whether the follower exists in the followers 
+      if (designer.followers.indexOf(follower) != -1)
+        return res.json(designer, 200);
+
+      // add follower into the array
+      designer.followers.push(follower);
+      // save the instance
+      designer.save(function(err) {
+        if (err) return res.serverError(err);
+
+        return res.json(designer, 200);
+      });
+
+    }).fail(function(err) {
+      return res.serverError(err);
+    });
+
+  },
+
+
+  /**
+   *  @GET
+   *    /user/unfollow/:designer
+   *
+   *  @description
+   *  unfollow designer
+   *
+   */
+
+  unfollow: function(req, res) {
+    var name = req.params.designer;
+
+    // find the designer instance
+    Designer.findOneByName(name).then(function(designer) {
+      if (!designer)
+        return res.json({
+          message: 'designer not exists'
+        }, 400);
+
+      return designer;
+    }).then(function(designer) {
+
+      // initialize followers array if it is empty
+      var follower = req.session.user.email;
+
+      // whether the follower exists in the followers 
+      if (!designer.followers || designer.followers.indexOf(follower) == -1)
+        return res.json(designer, 200);
+
+      // remove follower from the array
+      var index = _.indexOf(designer.followers, follower);
+      if (index > -1) designer.followers.splice(index, 1);
+
+      // save the instance
+      designer.save(function(err) {
+        if (err) return res.serverError(err);
+
+        return res.json(designer, 200);
+      });
+
+    }).fail(function(err) {
+      return res.serverError(err);
+    });
+
+  },
+
 
 
 
@@ -401,51 +548,6 @@ module.exports = {
 
 
 
-  // api calls
-
-  follow: function(req, res) {
-    var name = req.params.name;
-
-    // find the designer instance
-    Designer.findOneByName(name).done(function(err, designer) {
-      if (err || !designer) return res.json({
-        error: true
-      });
-
-      // initialize followers array if it is empty
-      var follower = req.session.user.email;
-      if (designer.followers == null) designer.followers = [];
-
-      // whether the follower exists in the followers 
-      if (designer.followers.indexOf(follower) != -1)
-        return res.json({
-          success: true
-        });
-
-      // add follower into the array
-      designer.followers.push(follower);
-      // save the instance
-      designer.save(function(err) {
-        if (err) return res.json({
-          error: err
-        });
-
-        return res.json(designer);
-      });
-
-    });
-
-
-  },
-
-  unfollow: function(req, res) {
-    var name = req.params.name;
-
-    // Designer.findOneByName(name).done(function(err, designer) {
-    //     if (err) return res.view('500');
-    //   }
-    // }
-  }
 
 
 };
