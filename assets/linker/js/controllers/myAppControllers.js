@@ -1,36 +1,34 @@
 var myAppControllers = angular.module('myAppControllers', []);
 
-// follow controller
-myAppControllers.controller('DesignerCtrl', ['$scope', '$http',
+
+myAppControllers.controller('UserProfileCtrl',
+  function($scope, $http) {
+    $scope.init = function() {
+      $http.get('/api/me/followees')
+        .success(function(data) {
+          $scope.followees = data;
+        });
+
+      $http.get('/api/me/likes')
+        .success(function(data) {
+          $scope.likes = data;
+        });
+    };
+  }
+);
+
+myAppControllers.controller('PieceImageCtrl', ['$scope', '$http',
   function($scope, $http) {
 
-    $scope.disabled = false;
-
-    $scope.isProcessing = function() {
-      return $scope.disabled;
-    };
-
-    $scope.follow = function(designer) {
-      $scope.disabled = true;
-      var url = '/user/follow/' + designer;
-      $http.get(url, {
-        cache: false
-      }).success(function(data) {
+    $scope.delete = function(pieceId, imageId) {
+      //url: /me/piece/images/destroy/:id
+      var url = '/me/piece/images/' + pieceId + '/' + imageId;
+      console.log(url);
+      $http.delete(url).success(function(data) {
         console.log(data);
-        $scope.disabled = false;
+      }).error(function(err) {
+        console.log(err);
       });
-    };
-
-    $scope.unfollow = function(designer) {
-      $scope.disabled = true;
-      var url = '/user/unfollow/' + designer;
-      $http.get(url, {
-        cache: false
-      }).success(function(data) {
-        console.log(data);
-        $scope.disabled = false;
-      });
-    };
-
+    }
   }
 ]);

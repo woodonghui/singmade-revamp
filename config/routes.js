@@ -1,8 +1,21 @@
 module.exports.routes = {
 
-  '/': {
+  /**
+   *  IndexController
+   *
+   */
+
+  'get /': {
     view: 'home/index'
   },
+  'get /home/getGridPieces/:page': 'IndexController.gridPieces',
+  'get /home/getHotspotDesigners': 'IndexController.hotspotDesigners',
+
+  'get /home/ifollows': 'IndexController.ifollows',
+
+  'get /api/userAvatar/:email': 'IndexController.userAvatar',
+  'get /api/designerAvatar/:name': 'IndexController.designerAvatar',
+
 
 
   /**
@@ -18,14 +31,10 @@ module.exports.routes = {
   'get /reset-password': 'UserController.resetPassword',
 
   'get /me': 'UserController.me',
+  'post /me/avatar': 'UserController.avatar',
 
-  /**
-   *  UserController
-   *  social actions
-   *  follow/unfollow designer
-   */
-  'get /user/follow/:designer': 'UserController.follow',
-  'get /user/unfollow/:designer': 'UserController.unfollow',
+  'get /api/me/followees': 'UserController.followees',
+  'get /api/me/likes': 'UserController.likes',
 
 
 
@@ -33,19 +42,26 @@ module.exports.routes = {
    *  DesignerController
    *
    */
-  'get /designers': {
-    controller: 'DesignerController',
-    action: 'find'
-  },
+  'post /me/be-a-designer': 'DesignerController.beADesigner',
+  'post /me/designer': 'DesignerController.save',
 
-  'get /designer': {
-    controller: 'DesignerController',
-    action: 'all'
-  },
-  'get /designer/:name': {
-    controller: 'DesignerController',
-    action: 'list'
-  },
+  'get /designers': 'DesignerController.find',
+  'get /designer': 'DesignerController.all',
+
+  'get /designer/:name': 'DesignerController.list',
+  'get /api/designer/:name': 'DesignerController.designer',
+
+  //sockets
+  // 'get /sub_designer/:name': 'DesignerController.subscribe',
+
+  /**
+   *
+   *  SocialController
+   *
+   */
+  'get /social/like/:pieceId': 'SocialController.like',
+  'get /social/follow/:designer': 'SocialController.follow',
+  'get /social/unfollow/:designer': 'SocialController.unfollow',
 
 
 
@@ -67,7 +83,7 @@ module.exports.routes = {
 
   'get /me/piece/images/:id': 'ManageController.images',
   'post /me/piece/images/:id': 'ManageController.upload',
-  'get /me/piece/images/destroy/:id': 'ManageController.destroy',
+  'delete /me/piece/images/:id/:publicId': 'ManageController.destroy',
 
 
   /**
@@ -76,6 +92,19 @@ module.exports.routes = {
    */
   'get /piece/:slug': 'PieceController.detail',
 
+  //sockets
+  'get /socket/piece/:pieceId': 'PieceController.subscribePiece',
+
+
+
+
+
+  /**
+   *  CommentController
+   *
+   */
+  'post /comment/:pieceId': 'CommentController.add',
+  'get /comment/:pieceId': 'CommentController.list',
 
 
 

@@ -7,6 +7,7 @@
  */
 
 var Q = require('q');
+var _ = require('../utils/underscore');
 
 module.exports = {
 
@@ -14,8 +15,7 @@ module.exports = {
 
     slugId: {
       type: 'string',
-      required: true,
-      unique: true
+      // unique: true
     },
 
     // internalId: {
@@ -42,13 +42,14 @@ module.exports = {
       required: true
     },
 
-    // designerId: 'string'
+    designerId: 'string',
 
-
+    likes: 'array',
+    // comments: 'array',
+    // shares: 'array',
 
     // category: 'string', // clothes, home
     // collection: 'string', //group pieces into collections like year, style
-
 
 
     // Q promise implementation of save()
@@ -66,6 +67,22 @@ module.exports = {
     }
 
   },
+
+
+  // beforeValidation: function(values, next) {
+  //   next();
+  // },
+
+  beforeCreate: function(values, next) {
+    values.slugId = _.slug(values.title, 'by', values.designer);
+    next();
+  },
+
+  beforeUpdate: function(values, next) {
+    values.slugId = _.slug(values.title, 'by', values.designer);
+    next();
+  },
+
 
   validationMessages: {
     title: {

@@ -1,9 +1,21 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400,700);*/
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Alegreya+Sans);*/
+/*font-family: 'Alegreya Sans', sans-serif;*/
+
+
 
 /*global variables, functions*/
+$text-title-color:#1f1f1f;
+$text-title-size: 2.2em;
+$text-light-color: #a5a5a2;
+$text-light-size: 0.9em;
+$text-size: 1em; 
+$text-color:#4b4b4b;
+$text-hover-color:#EE5193;
+$p-font-height: 1.7em;
 
-$pink:#EE5193;
-$textColor:#000;
+
 @mixin transitionBackground {
     -webkit-transition: background linear .2s;
     -moz-transition: background linear .2s;
@@ -18,28 +30,24 @@ $textColor:#000;
 }
 /* end */
 
+
 /*global styles*/
 
-hr.style-six {
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+a {
+    color: $text-color;
+    &:hover {
+        color: $text-hover-color;
+    }
 }
-hr.row {
-    margin: 2rem auto;
-    border: 0;
-    height: 0;
-    border-top: none;
-    border-bottom: 1px solid #bbb;
-    /*
-	height: 1px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	*/
+
+h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: $text-title-size;
+    color: $text-title-color;
+    margin: 2rem 0;
 }
+
 .ltr {
     text-align: left;
 }
@@ -63,21 +71,94 @@ hr.row {
         color: white;
         background: black;
     }
+    &:disabled {
+        background: #999 !important;
+        cursor: progress;
+    }
 }
-.button:disabled {
-    background: grey !important;
-    cursor: progress;
+
+
+.icon-button {
+    cursor: pointer;
+    padding: 0px 10px;
+    font-size: 18px;
+    color: #ccc;
+    &.large {
+        font-size: 72px;
+    }
+    &:hover{
+        color: $text-hover-color;
+    }
+}
+
+
+/**
+*  extended by 
+*   li.piece
+*
+*/
+.zoom-transition {
+    padding: 3px; 
+    border: 1px solid #eee;
+    display: block;
+    overflow: hidden;    
+    & > img {
+        -webkit-transition: all 550ms ease-out;
+        -moz-transition: all 550ms ease-out;
+        transition: all 550ms ease-out;
+        -webkit-transform: scale(1, 1);
+        -moz-transform: scale(1, 1);
+        -ms-transform: scale(1, 1);
+        -o-transform: scale(1, 1);
+        transform: scale(1, 1);
+    }
+    &:hover > img {
+        opacity: 0.8;
+        -webkit-transition: all 550ms ease-out;
+        -moz-transition: all 550ms ease-out;
+        transition: all 550ms ease-out;
+        -webkit-transform: scale(1.1, 1.1);
+        -moz-transform: scale(1.1, 1.1);
+        -ms-transform: scale(1.1, 1.1);
+        -o-transform: scale(1.1, 1.1);
+        transform: scale(1.1, 1.1);
+    }
+}
+
+
+ul.circle-list li.designer {
+    font-size: 0.8rem;
+    a {
+        display: block;
+        overflow: hidden;
+        text-align: center;
+    }
+    img {
+        /*border-radius: 200px;*/
+        border-radius: 50%;
+    }
+    img.default {
+        background: black;
+    }
+    .name-title {
+        text-transform: capitalize;
+        padding-top: 1rem;
+        text-align: center;
+        .name {
+            font-weight: bold;
+        }
+    }
 }
 /*end*/
 
-/*page styles*/
 
 html body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #333;
-    /*background: url("../../../images/background.png") repeat scroll 0 0 #fff;*/
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Roboto', sans-serif;
+    color: $text-color;
+    font-size: $text-size;
+
     .body-wrapper {
-        /*background: rgba(255,255,255,0.6);*/
         background: white;
         width: 100%;
         min-height: 100%;
@@ -85,15 +166,21 @@ html body {
     }
 }
 .header {
-    /*background: rgba(0,0,0,0.7);*/
     background: black;
-    .button-group {
-        padding: 10px 0;
+
+    .link-group {
+        text-transform: uppercase;
+        color: white;
+        a {
+            margin: 15px 5px;
+            display: inline-block;
+            color: white;
+            &:hover{color: $text-hover-color;};
+        }
     }
 }
 .footer {
     padding: 30px 0;
-    /*background: rgba(0,0,0,0.7);*/
     background: black;
     font-size: 0.8rem;
     color: #fff;
@@ -144,20 +231,20 @@ html body {
         }
     }
 }
+
 .inner-wrapper {
     /*padding: 20px;*/
     background: white;
 }
 
 
-
 .normal-wrapper {
     padding: 2rem 1rem;
     h1 {
         text-transform: capitalize;
-        letter-spacing: 1px;
-        font-size: 2rem;
-        color: #999;
+        /*letter-spacing: 1px;*/
+        /*font-size: 2rem;*/
+        /*color: #999;*/
     }
 }
 
@@ -173,13 +260,11 @@ html body {
     font-size: 0.8rem;
     background: black;
     img.avatar {
-        background: white;
         width: 150px;
-        border-radius: 75px;
-        -webkit-border-radius: 75px;
-        -moz-border-radius: 75px;
+        border-radius: 50%;
     }
     .name-title {
+        text-transform: capitalize;
         padding-top: 1rem;
         text-align: center;
         .name {
@@ -202,40 +287,18 @@ html body {
 * 
 */
 .list-wrapper {
+    
     padding: 2rem 1rem;
+
     h1 {
         text-transform: capitalize;
-        letter-spacing: 1px;
-        font-size: 2rem;
-        color: #999;
     }
+
     li.piece {
-        font-size: 0.8rem;
         a {
-            display: block;
-            overflow: hidden;
-            color: #333;
+            color: $text-color;
             text-align: center;
-        }
-        img {
-            -webkit-transition: all 550ms ease-out;
-            -moz-transition: all 550ms ease-out;
-            transition: all 550ms ease-out;
-            -webkit-transform: scale(1, 1);
-            -moz-transform: scale(1, 1);
-            -ms-transform: scale(1, 1);
-            -o-transform: scale(1, 1);
-            transform: scale(1, 1);
-        }
-        &:hover img {
-            -webkit-transition: all 550ms ease-out;
-            -moz-transition: all 550ms ease-out;
-            transition: all 550ms ease-out;
-            -webkit-transform: scale(1.1, 1.1);
-            -moz-transform: scale(1.1, 1.1);
-            -ms-transform: scale(1.1, 1.1);
-            -o-transform: scale(1.1, 1.1);
-            transform: scale(1.1, 1.1);
+            @extend .zoom-transition;
         }
     }
 
@@ -249,12 +312,13 @@ html body {
             text-align: center;
         }
         img {
-            border-radius: 200px;
+            border-radius: 50%;
         }
         img.default {
             background: black;
         }
         .name-title {
+            text-transform: capitalize;
             padding-top: 1rem;
             text-align: center;
             .name {
@@ -279,5 +343,62 @@ html body {
     .description {
         font-size: 0.8rem;
         color: #333;
+    }
+}
+
+
+
+/**
+*  grid component
+*
+*/
+.grid-wrapper {
+    position: relative;
+    img {
+        width: 100%;
+    }
+
+    & > .columns {
+        padding: 0 5px;
+        padding-bottom: 5px;
+
+        & > .row {
+            padding: 5px 0;
+            &:first-child {
+                padding-top: 0;
+            }
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .left-button, .right-button {
+        position: absolute;
+        top: 40%;
+        z-index: 99;
+    }
+
+    .left-button {
+        left: -72px;
+    }
+
+    .right-button {
+        right: -72px;
+    }
+}
+
+
+
+.comments-wrapper {
+    .comment {
+        p { font-size: 0.8em };
+        margin: 1em 0;
+        /*color: $text-light-color;*/
+        img.avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
     }
 }

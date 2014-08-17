@@ -17,7 +17,7 @@ _.mixin({
     return arr.join("&");
   },
 
-  remove: function(arr, crita) {
+  queryStringToObject: function(o) {
 
   },
 

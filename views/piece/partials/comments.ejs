@@ -1,0 +1,19 @@
+<div class="comments-wrapper" ng-controller="CommentViewCtrl" ng-init="init('<%= piece.id %>')">
+	<h3>Comments</h3>
+
+    <div class="row comment" ng-repeat="comment in comments">
+    	<div class="small-12 medium-2 columns">
+    		<img class="avatar" user-avatar user-id="{{comment.userId}}">
+    	</div>
+    	<div class="small-12 medium-10 columns">
+		<!-- <span class="name">{{comment.userId}}</span> -->
+    	<p>{{comment.content}}</p>
+    	</div>
+    	
+    </div>
+
+	<form>
+		<textarea ng-model="content" required></textarea>
+		<button busy-button class="button" ng-click="comment()"><i class="fi-comments"></i> Comment</button>
+	</form>
+</div>

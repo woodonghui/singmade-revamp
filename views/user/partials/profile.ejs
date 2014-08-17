@@ -1,0 +1,43 @@
+<style type="text/css">
+
+.profile-wrapper .header{
+  background-color: black;
+  text-align: center;
+  height: 100px;
+  overflow: visible;
+  margin-bottom: 50px;  
+}
+
+.profile-wrapper .header img {
+  margin-top: 50px;
+}
+
+
+</style>
+
+<div class="profile-wrapper">
+  <div class="header">
+
+    <% if (typeof req.session.user.avatar != 'undefined') { %>
+        <img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_100,w_100/<%= req.session.user.avatar.public_id %>.<%= req.session.user.avatar.format %>" style="border-radius: 50%;">
+    <% } %>
+
+  </div>
+  <div class="row ttt">
+      <p>
+        <%= req.session.user.email %> 
+      </p>
+      <p>
+        <a class="button" href="/change-password"><%= __('Change password') %></a>
+      </p>
+
+      <p>
+
+        <form method="post" action="/me/avatar" enctype="multipart/form-data">
+          <input type="file" name="avatar" style="width: auto;" />
+          <button type="submit" class="button">upload</button>
+        </form>
+
+      </p>
+  </div>
+</div>

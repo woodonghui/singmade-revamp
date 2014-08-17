@@ -1,5 +1,5 @@
 /**
- * PieceController
+ * CommentController
  *
  * @module      :: Controller
  * @description :: A set of functions called `actions`.
@@ -15,74 +15,65 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-
 module.exports = {
+
+
+
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to PieceController)
+   * (specific to CommentController)
    */
   _config: {},
 
-
   /**
-   *  @GET
-   *    /piece/slug-id-with-readable-name
+   *  @POST
+   *    /comment/:pieceId
    *
    *  @description
-   *  list the details of the piece
+   *  post a comment
    *
    */
-  detail: function(req, res) {
-    var slug = req.params.slug;
+  add: function(req, res) {
+    Comment.create({
+      userId: req.session.user.email,
+      pieceId: req.params.pieceId,
+      content: req.body.content
+    }).then(function(comment) {
 
-    Piece.findOneBySlugId(slug)
-      .then(function(piece) {
-        if (!piece) throw new Error('noPieceFound');
-        return piece;
-      })
-      .then(function(piece) {
-        return [Designer.findOneByName(piece.designer), piece];
-      })
-      .spread(function(designer, piece) {
-        if (!designer) throw new Error('noPieceFound');
-        return res.view({
-          designer: designer,
-          piece: piece
-        });
-      })
-      .fail(function(err) {
-        if (err.message == 'noPieceFound')
-          return res.notFound();
-        return res.serverError(err);
+      Piece.publishUpdate(req.params.pieceId, {
+        eventName: 'commentAddedEvent',
+        comment: comment
       });
-  },
 
+      return res.json(comment, 200);
 
-
-
-  // lovely sockets
-
-  /**
-   *  @GET
-   *    /socket/piece/:pieceId
-   *
-   *  @description
-   *  description
-   *
-   */
-
-  // REMOVE
-  subscribePiece: function(req, res) {
-    Piece.findOneById(req.params.pieceId).then(function(piece) {
-      Piece.subscribe(req.socket, piece);
-      return res.send(200);
     }).fail(function(err) {
       return res.serverError(err);
-    })
+    });
   },
 
-
+  /**
+   *  @GET
+   *  @SOCKET
+   *
+   *    /comment/:pieceId
+   *
+   *  @description
+   *  list the comments of pieceId,
+   *  and listen the socket for comments
+   *
+   */
+  list: function(req, res) {
+    Piece.findOneById(req.params.pieceId).then(function(piece) {
+      Piece.subscribe(req.socket, piece);
+      return Comment.findByPieceId(req.params.pieceId).limit(6).sort('createdAt DESC');
+    }).then(function(comments) {
+      return res.json(comments, 200);
+    }).fail(function(err) {
+      return res.serverError(err);
+    });
+  },
 
 
 

@@ -1,32 +1,77 @@
+
+<div ng-controller="UserProfileCtrl" ng-init="init()">
+
+  <%- partial('partials/profile') %>
+
+  
 <div class="normal-wrapper">
+
+  <% if(req.session.user.userType == 'designer') { %>
+
+    <div class="row">
+      <a class="button" href="/me/piece">Manage My Designs</a>
+    </div>
+   
+    <%- partial('designerProfile') %>
+
+  <% } else { %>
+
   <div class="row">
-
-    <div class="small-12 medium-8 large-8 small-centered columns">
-
-      <h1>username</h1>
-      <p>
-      <%= req.session.user.email %>
-      </p>
-
+    
+    <div class="small-12 medium-12 large-12 columns">
+      <form method="post" action="/me/be-a-designer">
+        <p>
+          <button class="button" type="submit">I'm a designer</button>
+        </p>
+      </form>
     </div>
 
   </div>
   
-  <% if(req.session.user.userType == 'designer') { %>
-  <%- partial('designer') %>
-  <% } else { %>
-
-  <div class="row">
-  	<div class="small-12 medium-8 large-8 small-centered columns">
-  
-  <p>
-    <a href="/change-password"><%= __('Change password') %></a>
-  </p>
-
-  <p>
-  	<a href="">Be A Designer</a>
-  </p>
-</div>
-  </div>
   <% } %>
+
 </div>
+
+
+
+  <div class="list-wrapper">
+    <div class="row">
+      <h1>My Followees</h1>
+      <ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+      <li class="designer" ng-repeat="designer in followees">
+        <a href="/designer/{{designer.name}}">
+          <img class="avatar" no-avatar ng-src="{{designer.avatar}}" height="100%" width="100%">
+        </a>
+        <div class="name-title"><span class="name">{{designer.name}}</span> | <span class="title">{{designer.title}}</span></div>
+
+      </li>
+      </ul>
+
+    </div>
+  </div>
+
+
+
+  <div class="list-wrapper">
+
+    <div class="row">
+      <h1>My Likes</h1>
+      <ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+      <li class="piece" ng-repeat="piece in likes">
+        <a class="zoom-transition" href="/piece/{{piece.slugId}}">
+          <img no-image grid-width="200" grid-height="200" image-id="{{piece.images[0].public_id}}" format="{{piece.images[0].format}}">
+        </a>
+
+      </li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+

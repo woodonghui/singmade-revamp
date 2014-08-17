@@ -54,14 +54,15 @@ module.exports = function(grunt) {
 
     // A simpler boilerplate library for getting you up and running w/ an
     // automatic listener for incoming messages from Socket.io.
-    'linker/js/app.js',
+    // 'linker/js/app.js',
 
     // *->    put other dependencies here   <-*
 
     // All of the rest of your app scripts imported here
     'linker/js/vendor/*.js',
-    'linker/js/myapp.js',
-    'linker/js/controllers/*.js'
+    'linker/js/components.js',
+    'linker/js/controllers/*.js',
+    'linker/js/myapp.js'
   ];
 
 
@@ -170,7 +171,7 @@ module.exports = function(grunt) {
           destPrefix: 'assets/linker'
         },
         files: {
-          'js/vendor/angular.js': 'angular/angular.js'
+          'js/vendor/angular.js': 'angular/angular.js',
         }
       }
     },

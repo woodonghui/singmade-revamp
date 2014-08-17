@@ -1,6 +1,7 @@
 <%- partial( '../designer/partials/designer') %>
 
-<div class="normal-wrapper detail-wrapper">
+<div class="normal-wrapper detail-wrapper" ng-controller="PieceViewCtrl" ng-init="init('<%= piece.id %>', '<%= piece.slugId %>')">
+
 	<div class="row">
 	  <h1>
 	    <%=piece.title %>
@@ -10,7 +11,12 @@
 	  	<div class="small-12 medium-7 column images">
 	  		<% if (typeof piece.images != 'undefined') { %>
 	  		<% _.each(piece.images, function (image) { %>
-			<img src="<%= image.url %>" width="100%">
+	  			<% if(image.url) { %>
+				<img src="<%= image.url %>" width="100%">
+				<% } else { %>
+				<!-- display the legacy images -->
+				<img src="http://res.cloudinary.com/boutiquesg/image/upload/<%= image.public_id %>.<%= image.format %>" width="100%">
+				<% } %>
 			<% }) %>
 			<% } %>
 	  	</div>
@@ -20,10 +26,13 @@
 
 	  	<div class="small-12 medium-4 column">
 	  		<p>
-				<a class="button" href="">like</a>
-				<a class="button" href="">share</a>
+	  			<button class="button" busy-button ng-click="like()"><i class="fi-heart"></i> like</button>
+	  			<!-- <button class="button"><i class="fi-share"></i> share</button> -->
 			</p>
 	  		<p class="description"><%- piece.description %></p>
+
+	  		<%- partial('partials/comments') %>
+
 	  	</div>
 
 	  </div>

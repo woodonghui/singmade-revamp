@@ -1,26 +1,31 @@
 vision and domain
 ----------------------
-	- name of the website
-	- vision: singmade is a fashion designer coummunity of sharing designs, finding inspiration and interacting with your followers.
-	- mission: the largest designer community in Asia
-	- "all about originality"
-	- web font
+done	- name of the website | singmade.com
+	- logo design
+	- vision (): singmade is a fashion designer coummunity for designs publishing and sharing, finding inspiration and interacting with your followers.
+	- singmade.com | a fashion designers coummunity for design publishing, sharing and discovering
 
-programming
+done	- mission (What you want to be): the largest designer community in Asia
+	- "all about originality"
+done	- web font | "Roboto"
+
+
+
+
+designing
 ----------------------
 	- home page design
 	- wire up links
 
-done	- login/sign up
-done	- activate account/messaging integration
-done	- forgot password/messaging integration
 
-	- designer registration
-	- designer updating profile
+programming
+----------------------
+		- index page builder (refactoring query use mongo native)
+		
 	
 	- view counts
 done	- follow
-	- like
+done	- like
 	- share
 	- message/comment
 	
@@ -31,6 +36,14 @@ done	- designer managing pieces
 
 testing and continuous integration
 --------------------------------------
+done	- login/sign up (testing)
+done	- activate account/messaging integration (testing)
+done	- forgot password/messaging integration (testing)
+		
+		- snapCI integration
+
+done	- designer registration
+done	- designer updating profile
 
 
 

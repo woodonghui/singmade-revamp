@@ -1,21 +1,17 @@
-<div class="designer-wrapper" ng-controller="DesignerCtrl">
+<div class="designer-wrapper" ng-controller="DesignerViewCtrl" ng-init="init('<%= designer.name %>', '<%= designer.title %>', '<%= designer.profile %>', '<%= designer.avatar %>')">
 	<div class="row">
 		<div class="column small-3 ttt">
-			<a href="/designer/<%= designer.name %>">
-				<% if(designer.avatar != '') { %>
-				<img class="avatar" src="<%= designer.avatar %>">
-				<% } else { %>
-				<img class="avatar" src="http://res.cloudinary.com/boutiquesg/image/upload/v1384063868/singmade-logo-i_vf9sbv.png">
-				<% } %>
+			<a href="/designer/{{designer.name}}">
+				<img class="avatar" no-avatar ng-src='{{designer.avatar}}'>
 			</a>
-			<div class="name-title"><span class="name"><%= designer.name %></span> | <span class="title"><%= designer.title %></span></div>
+			<div class="name-title"><span class="name">{{designer.name}}</span> | <span class="title">{{designer.title}}</span></div>
 		</div>
 		<div class="column small-9">
-			<div class="profile"><%- designer.profile %></div>
+			<div class="profile">{{designer.profile}}</div>
 			<div class="actions">
-				<button class="button">message</a>
-				<button class="button" ng-disabled="isProcessing()" ng-click="follow('<%= designer.name %>')">follow</a>
-				<button class="button" ng-disabled="isProcessing()" ng-click="unfollow('<%= designer.name %>')">unfollow</a>
+				<button class="button"><i class="fi-mail"></i> message</button> 
+				<button class="button" busy-button ng-click="follow()" ng-show="!isFollowing"><i class="fi-plus"></i> follow</button> 
+				<button busy-button class="button" busy-button ng-click="unfollow()" ng-show="isFollowing"><i class="fi-minus"></i> unfollow</button>
 			</div>
 		</div>
 	</div>

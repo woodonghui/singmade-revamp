@@ -1,0 +1,17 @@
+<div class="list-wrapper" ng-controller="HotspotDesignerCtrl">
+	<div class="row">
+		<h1>hotspot designers</h1>
+		<ul class="small-block-grid-2 medium-block-grid-4 large-block-grid-6">
+		<li class="designer" ng-repeat="designer in designers">
+			<a href="/designer/{{designer.name}}">
+
+				<img class="avatar" ng-src="{{designer.avatar}}" height="100%" width="100%">
+
+			<div class="name-title"><span class="name">{{designer.name}}</span> | <span class="title">{{designer.title}}</span></div>
+
+		</li>
+		</ul>
+
+	</div>
+</div>
+

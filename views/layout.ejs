@@ -8,8 +8,9 @@
         exactly the same way as with your other view templates.
     -->
   <title>
-    <%- title %>
+    singmade.com | a fashion designers coummunity for design publishing, sharing and discovering
   </title>
+  <link rel="icon" type="image/ico" href="/favicon.ico"/>
 
   <!-- Viewport mobile tag for sensible mobile support -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -28,6 +29,7 @@
   <link rel="stylesheet" href="/linker/styles/css/dropzone.css">
   <link rel="stylesheet" href="/linker/styles/css/foundation.min.css">
   <link rel="stylesheet" href="/linker/styles/css/styles.min.css">
+  <link rel="stylesheet" href="/linker/styles/icon/foundation-icons.css">
   <!--STYLES END-->
 
 
@@ -51,22 +53,27 @@
     <div class="header">
       <div class="row">
         <div class="column small-6 ltr">
-          <!-- <img class="logo" src="/images/logo.png">
-            singmade.com -->
+          <div>
+            <a href="/" style="display: inline-block; padding: 5px 0;">
+              <img src="http://res.cloudinary.com/boutiquesg/image/upload/c_scale,h_35/v1384063847/singmade-logo-white_nme1s4.png">
+            </a>
+             <!-- ~ all about originality -->
+          </div>
         </div>
         <div class="column small-6 rtl">
 
-          <div class="button-group">
+          <div class="link-group">
 
             <% if(req.session.user) { %>
-              <a href="/me">
+              <a href="/me" style="text-transform: lowercase;">
                 <%=req.session.user.email %>
               </a>
                / 
               <a href="/logout">logout</a>
               <% } else { %>
-                <a class="button" href="/login">login</a>
-                <a class="button" href="/signup">sign up</a>
+                <a href="/login">login</a>
+                 / 
+                <a href="/signup">sign up</a>
                 <% } %>
           </div>
 
@@ -131,6 +138,10 @@
 
   <!--
 
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+
       Client-side Javascript
       ========================
 
@@ -144,46 +155,20 @@
   <!-- then beef it up with some convenience logic for talking to Sails.js -->
   <!-- listen on socket.io for incoming messages -->
 
+
+
   <!--SCRIPTS-->
   <script src="/linker/js/socket.io.js"></script>
   <script src="/linker/js/sails.io.js"></script>
-  <script src="/linker/js/app.js"></script>
   <script src="/linker/js/vendor/angular.js"></script>
   <script src="/linker/js/vendor/dropzone.js"></script>
-  <script src="/linker/js/myapp.js"></script>
+  <script src="/linker/js/components.js"></script>
+  <script src="/linker/js/controllers/designerControllers.js"></script>
+  <script src="/linker/js/controllers/homeControllers.js"></script>
   <script src="/linker/js/controllers/myAppControllers.js"></script>
-  <script src="/linker/js/controllers/pieceManagerController.js"></script>
+  <script src="/linker/js/controllers/pieceControllers.js"></script>
+  <script src="/linker/js/myapp.js"></script>
   <!--SCRIPTS END-->
-
-
-  <!--
-
-      Looking for client-side CoffeeScript or TypeScript?
-      ================================================
-
-      CoffeeScript and TypeScript precompilation are not installed by default,
-      but if you'd like to mix those features in, it is straightforward to
-      `npm install` the relevant grunt community modules and modify your Gruntfile
-      to use them.
-
-    -->
-
-
-
-  <!--
-
-      Another way: The Asset Linker
-      ========================
-
-      Sails supports a Grunt-based asset linker, to automatically inject 
-      <link> and <script> tags, as well any client-side templates you're using
-      into your HTML layouts and views, respecting dependencies.
-
-      You created this Sails app with the asset linker disabled.
-      If you change your mind, check out the docs on the subject:
-      http://sailsjs.org/#!documentation/asset-management
-
-    -->
 
 </body>
 

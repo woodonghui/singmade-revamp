@@ -11,7 +11,13 @@ module.exports = {
 
   attributes: {
 
-    email: { // unique user id  
+    /**
+     *
+     *  @description
+     *  email address as unique id
+     *
+     */
+    email: {
       type: 'email',
       required: true,
       unique: true
@@ -22,6 +28,28 @@ module.exports = {
       required: true
     },
 
+    /**
+     *
+     *  @description
+     *  user avatar image
+     *  cloudinary json instance
+     *
+     */
+    avatar: 'json',
+
+    online: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
+
+    /**
+     *
+     *  @description
+     *  reset password token to be set when
+     *  user requests to change/forget password
+     *
+     */
     resetPasswordToken: 'string',
 
 
@@ -35,7 +63,6 @@ module.exports = {
       type: 'string',
       defaultsTo: 'user'
     },
-
 
 
     /**

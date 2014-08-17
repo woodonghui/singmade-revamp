@@ -48,3 +48,5 @@ nbproject
 # local config
 ########################
 test/capture
+
+application.log

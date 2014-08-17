@@ -16,6 +16,10 @@ module.exports.policies = {
   UserController: {
     '*': false,
 
+    subscribe: 'localize',
+    broadcast: 'localize',
+    join: 'localize',
+
     /**
      *  public access allowed
      *
@@ -36,10 +40,10 @@ module.exports.policies = {
      *
      */
     me: ['localize', 'isAuthenticated'],
+    avatar: ['localize', 'isAuthenticated'],
 
-    follow: ['localize', 'isAuthenticated'],
-    unfollow: ['localize', 'isAuthenticated'],
-    ifollow: ['localize', 'isAuthenticated']
+    followees: ['localize', 'isAuthenticated'],
+    likes: ['localize', 'isAuthenticated'],
 
     // create or update designer
     // saveDesigner: ['isAuthenticated', 'isEligibleToBeDesigner']
@@ -66,6 +70,24 @@ module.exports.policies = {
     upload: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
     destroy: ['localize', 'isAuthenticated', 'isDesigner', 'isPieceOwner'],
 
+
+  },
+
+  SocialController: {
+    '*': false,
+
+    like: ['localize', 'isAuthenticated'],
+    follow: ['localize', 'isAuthenticated'],
+    unfollow: ['localize', 'isAuthenticated'],
+
+  },
+
+
+  CommentController: {
+    '*': false,
+
+    list: 'localize',
+    add: ['localize', 'isAuthenticated'],
 
   },
 

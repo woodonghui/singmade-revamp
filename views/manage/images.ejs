@@ -1,4 +1,4 @@
-<div class="list-wrapper">
+<div class="list-wrapper" ng-controller="PieceImageCtrl">
 	<div class="row">
 		<h1>
 			<a href="/me/piece">my designs</a> 
@@ -14,7 +14,7 @@
 				<img src="http://res.cloudinary.com/boutiquesg/image/upload/c_fill,h_200,w_200/<%= image.public_id %>.<%= image.format %>" width="100%">
 			</a>
 			<div class="title">
-				<a class="button" href='/me/piece/images/destroy/<%= piece.id %>?public_id=<%= image.public_id %>'>remove</a>
+				<a class="button" ng-click="delete('<%= piece.id %>', '<%= image.public_id %>')">delete</a>
 			</div>
 
 		</li>

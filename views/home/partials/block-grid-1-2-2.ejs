@@ -1,0 +1,53 @@
+<div class="row grid-wrapper" style="margin-bottom: 1rem;" ng-controller="BlockGridCtrl">
+
+	<i class="icon-button large left-button fi-arrow-left" ng-click="getGridPieces(page-1);" ng-show="page > 0"></i>
+	<i class="icon-button large right-button fi-arrow-right" ng-click="getGridPieces(page+1);" ng-show="page < pageSize || !pageSize"></i>
+
+	<div class="small-12 medium-3 large-3 columns">
+
+		<div class="row">
+			<div class="small-12 columns">
+				<a class="zoom-transition" href="/piece/{{pieces[1].slugId}}">
+					<img no-image grid-width="250" grid-height="200" image-id="{{pieces[1].images[0].public_id}}" format="{{pieces[1].images[0].format}}">
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="small-12 columns">
+				<a class="zoom-transition" href="/piece/{{[2].slugId}}">
+				<img no-image grid-width="250" grid-height="200" image-id="{{pieces[2].images[0].public_id}}" format="{{pieces[2].images[0].format}}">
+			</a>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="small-12 medium-3 large-3 columns">
+
+		<div class="row">
+			<div class="small-12 columns">
+				<a class="zoom-transition" href="/piece/{{pieces[3].slugId}}">
+				<img no-image grid-width="250" grid-height="200" image-id="{{pieces[3].images[0].public_id}}" format="{{pieces[3].images[0].format}}">
+			</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="small-12 columns">
+				<a class="zoom-transition" href="/piece/{{pieces[4].slugId}}">
+				<img no-image grid-width="250" grid-height="200" image-id="{{pieces[4].images[0].public_id}}" format="{{pieces[4].images[0].format}}">
+			</a>
+			</div>
+		</div>
+	
+	</div>
+
+	<div class="small-12 medium-6 large-6 columns">
+		<a class="zoom-transition" href="/piece/{{pieces[0].slugId}}">
+		<img no-image grid-width="500" grid-height="405" image-id="{{pieces[0].images[0].public_id}}" format="{{pieces[0].images[0].format}}">
+		</a>
+	</div>
+
+</div>

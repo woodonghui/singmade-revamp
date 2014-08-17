@@ -97,21 +97,29 @@ module.exports = {
    *
    */
   save: function(req, res) {
-    var designerName = req.session.user.designer.name;
 
     var pieceData = {
       title: req.body.title,
       description: req.body.description
     };
-    pieceData.slugId = _.slug(pieceData.title, 'by', designerName);
-    pieceData.designer = designerName;
 
-    Piece.findOneBySlugId(pieceData.slugId).then(function(piece) {
+    Piece.findOne({
+      title: req.body.title,
+      designer: req.session.user.designer.name
+    }).then(function(piece) {
+
       if (piece) throw new Error('titleExists');
-      return Piece.create(pieceData);
+      return Piece.create({
+        title: req.body.title,
+        description: req.body.description,
+        designer: req.session.user.designer.name
+      });
+
     }).then(function(piece) {
       res.redirect('/me/piece/images/' + piece.id);
     }).fail(function(err) {
+
+      console.log(err);
 
       if (err.message == 'titleExists') {
         return res.view('manage/add', {
@@ -141,8 +149,8 @@ module.exports = {
    *
    */
   update: function(req, res) {
-    var designerName = req.session.user.designer.name;
-    var slugId = _.slug(req.body.title, 'by', designerName);
+    // var designerName = req.session.user.designer.name;
+    // var slugId = _.slug(req.body.title, 'by', designerName);
 
     var pieceData = {
       id: req.params.id,
@@ -150,7 +158,10 @@ module.exports = {
       description: req.body.description
     };
 
-    Piece.findOneBySlugId(slugId).then(function(piece) {
+    Piece.findOne({
+      title: req.body.title,
+      designer: req.session.user.designer.name
+    }).then(function(piece) {
 
       if (piece && piece.id != pieceData.id) throw new Error('titleExists');
       return Piece.findOneById(pieceData.id);
@@ -159,7 +170,6 @@ module.exports = {
 
       piece.title = pieceData.title;
       piece.description = pieceData.description;
-      piece.slugId = slugId;
 
       return piece.saveQ();
 
@@ -248,20 +258,26 @@ module.exports = {
    *
    */
   destroy: function(req, res) {
-    if (_.isEmpty(req.query.public_id))
+    // if (_.isEmpty(req.query.public_id))
+    //   return res.json({
+    //     message: 'no image found'
+    //   }, 400);
+
+    if (_.isEmpty(req.params.publicId))
       return res.json({
         message: 'no image found'
       }, 400);
 
     Piece.findOneById(req.params.id).then(function(piece) {
       var image = _.find(piece.images, function(e) {
-        return e.public_id == req.query.public_id;
+        return e.public_id == req.params.publicId;
       });
       var index = _.indexOf(piece.images, image);
       if (index > -1) piece.images.splice(index, 1);
 
       piece.save(function(err) {
-        return res.redirect('/me/piece/images/' + piece.id);
+        return res.json(200);
+        // return res.redirect('/me/piece/images/' + piece.id);
       });
 
     }).fail(function(err) {

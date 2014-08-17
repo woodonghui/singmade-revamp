@@ -1,27 +1,22 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400,700);*/
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Alegreya+Sans);*/
+/*font-family: 'Alegreya Sans', sans-serif;*/
 /*global variables, functions*/
 /* end */
 /*global styles*/
-hr.style-six {
-  border: 0;
-  height: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+a {
+  color: #4b4b4b;
+}
+a:hover {
+  color: #ee5193;
 }
 
-hr.row {
-  margin: 2rem auto;
-  border: 0;
-  height: 0;
-  border-top: none;
-  border-bottom: 1px solid #bbb;
-    /*
-	height: 1px;
-	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-	*/
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.2em;
+  color: #1f1f1f;
+  margin: 2rem 0;
 }
 
 .ltr {
@@ -54,21 +49,89 @@ hr.row {
   color: white;
   background: black;
 }
-
 .button:disabled {
-  background: grey !important;
+  background: #999 !important;
   cursor: progress;
 }
 
+.icon-button {
+  cursor: pointer;
+  padding: 0px 10px;
+  font-size: 18px;
+  color: #ccc;
+}
+.icon-button.large {
+  font-size: 72px;
+}
+.icon-button:hover {
+  color: #ee5193;
+}
+
+/**
+*  extended by 
+*   li.piece
+*
+*/
+.zoom-transition, .list-wrapper li.piece a {
+  padding: 3px;
+  border: 1px solid #eee;
+  display: block;
+  overflow: hidden;
+}
+.zoom-transition > img, .list-wrapper li.piece a > img {
+  -webkit-transition: all 550ms ease-out;
+  -moz-transition: all 550ms ease-out;
+  transition: all 550ms ease-out;
+  -webkit-transform: scale(1, 1);
+  -moz-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  -o-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+.zoom-transition:hover > img, .list-wrapper li.piece a:hover > img {
+  opacity: 0.8;
+  -webkit-transition: all 550ms ease-out;
+  -moz-transition: all 550ms ease-out;
+  transition: all 550ms ease-out;
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
+  -ms-transform: scale(1.1, 1.1);
+  -o-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
+}
+
+ul.circle-list li.designer {
+  font-size: 0.8rem;
+}
+ul.circle-list li.designer a {
+  display: block;
+  overflow: hidden;
+  text-align: center;
+}
+ul.circle-list li.designer img {
+  /*border-radius: 200px;*/
+  border-radius: 50%;
+}
+ul.circle-list li.designer img.default {
+  background: black;
+}
+ul.circle-list li.designer .name-title {
+  text-transform: capitalize;
+  padding-top: 1rem;
+  text-align: center;
+}
+ul.circle-list li.designer .name-title .name {
+  font-weight: bold;
+}
+
 /*end*/
-/*page styles*/
 html body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #333;
-  /*background: url("../../../images/background.png") repeat scroll 0 0 #fff;*/
+  /*font-family: 'Open Sans', sans-serif;*/
+  font-family: 'Roboto', sans-serif;
+  color: #4b4b4b;
+  font-size: 1em;
 }
 html body .body-wrapper {
-  /*background: rgba(255,255,255,0.6);*/
   background: white;
   width: 100%;
   min-height: 100%;
@@ -76,16 +139,23 @@ html body .body-wrapper {
 }
 
 .header {
-  /*background: rgba(0,0,0,0.7);*/
   background: black;
 }
-.header .button-group {
-  padding: 10px 0;
+.header .link-group {
+  text-transform: uppercase;
+  color: white;
+}
+.header .link-group a {
+  margin: 15px 5px;
+  display: inline-block;
+  color: white;
+}
+.header .link-group a:hover {
+  color: #ee5193;
 }
 
 .footer {
   padding: 30px 0;
-  /*background: rgba(0,0,0,0.7);*/
   background: black;
   font-size: 0.8rem;
   color: #fff;
@@ -149,9 +219,9 @@ html body .body-wrapper {
 }
 .normal-wrapper h1 {
   text-transform: capitalize;
-  letter-spacing: 1px;
-  font-size: 2rem;
-  color: #999;
+  /*letter-spacing: 1px;*/
+  /*font-size: 2rem;*/
+  /*color: #999;*/
 }
 
 /**
@@ -165,13 +235,11 @@ html body .body-wrapper {
   background: black;
 }
 .designer-wrapper img.avatar {
-  background: white;
   width: 150px;
-  border-radius: 75px;
-  -webkit-border-radius: 75px;
-  -moz-border-radius: 75px;
+  border-radius: 50%;
 }
 .designer-wrapper .name-title {
+  text-transform: capitalize;
   padding-top: 1rem;
   text-align: center;
 }
@@ -197,38 +265,10 @@ html body .body-wrapper {
 }
 .list-wrapper h1 {
   text-transform: capitalize;
-  letter-spacing: 1px;
-  font-size: 2rem;
-  color: #999;
-}
-.list-wrapper li.piece {
-  font-size: 0.8rem;
 }
 .list-wrapper li.piece a {
-  display: block;
-  overflow: hidden;
-  color: #333;
+  color: #4b4b4b;
   text-align: center;
-}
-.list-wrapper li.piece img {
-  -webkit-transition: all 550ms ease-out;
-  -moz-transition: all 550ms ease-out;
-  transition: all 550ms ease-out;
-  -webkit-transform: scale(1, 1);
-  -moz-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  -o-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-.list-wrapper li.piece:hover img {
-  -webkit-transition: all 550ms ease-out;
-  -moz-transition: all 550ms ease-out;
-  transition: all 550ms ease-out;
-  -webkit-transform: scale(1.1, 1.1);
-  -moz-transform: scale(1.1, 1.1);
-  -ms-transform: scale(1.1, 1.1);
-  -o-transform: scale(1.1, 1.1);
-  transform: scale(1.1, 1.1);
 }
 .list-wrapper li.designer {
   font-size: 0.8rem;
@@ -241,12 +281,13 @@ html body .body-wrapper {
   text-align: center;
 }
 .list-wrapper li.designer img {
-  border-radius: 200px;
+  border-radius: 50%;
 }
 .list-wrapper li.designer img.default {
   background: black;
 }
 .list-wrapper li.designer .name-title {
+  text-transform: capitalize;
   padding-top: 1rem;
   text-align: center;
 }
@@ -267,4 +308,52 @@ html body .body-wrapper {
 .detail-wrapper .description {
   font-size: 0.8rem;
   color: #333;
+}
+
+/**
+*  grid component
+*
+*/
+.grid-wrapper {
+  position: relative;
+}
+.grid-wrapper img {
+  width: 100%;
+}
+.grid-wrapper > .columns {
+  padding: 0 5px;
+  padding-bottom: 5px;
+}
+.grid-wrapper > .columns > .row {
+  padding: 5px 0;
+}
+.grid-wrapper > .columns > .row:first-child {
+  padding-top: 0;
+}
+.grid-wrapper > .columns > .row:last-child {
+  padding-bottom: 0;
+}
+.grid-wrapper .left-button, .grid-wrapper .right-button {
+  position: absolute;
+  top: 40%;
+  z-index: 99;
+}
+.grid-wrapper .left-button {
+  left: -72px;
+}
+.grid-wrapper .right-button {
+  right: -72px;
+}
+
+.comments-wrapper .comment {
+  margin: 1em 0;
+  /*color: $text-light-color;*/
+}
+.comments-wrapper .comment p {
+  font-size: 0.8em;
+}
+.comments-wrapper .comment img.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }

@@ -106,10 +106,24 @@ module.exports = {
         // normal user login, redirect to home page
         req.session.user = {
           email: user.email,
-          userType: user.userType
+          userType: user.userType,
+          avatar: user.avatar
         };
 
-        return res.redirect('/me');
+        user.online = true;
+        user.save(function(err) {
+
+          User.publishUpdate(user.id, {
+            loggedIn: true,
+            eventName: 'loggedIn',
+            datetime: Date.now(),
+            id: user.id,
+            email: user.email
+          });
+
+          return res.redirect('/me');
+        });
+
       })
       .fail(function(err) {
 
@@ -131,8 +145,25 @@ module.exports = {
    *
    */
   logout: function(req, res) {
-    if (req.session.user != null) delete req.session['user'];
-    return res.redirect('/user/login');
+    User.findOneByEmail(req.session.user.email, function(err, user) {
+      if (err) return next(err);
+
+      user.online = false;
+      user.save(function(err) {
+
+        delete req.session['user'];
+
+        User.publishUpdate(user.id, {
+          loggedIn: false,
+          datetime: Date.now(),
+          id: user.id,
+          email: user.email
+        });
+
+        return res.redirect('/login');
+      });
+
+    });
   },
 
 
@@ -332,218 +363,109 @@ module.exports = {
   },
 
 
-
-
   /**
-   *  social actions
-   *  ===========================================
-   *
-   */
-
-  /**
-   *  @GET
-   *    /user/ifollow
+   *  @POST
+   *    /me/avatar
    *
    *  @description
-   *  description
+   *  save user avatar image on cloudinary
    *
    */
-  ifollow: function(req, res) {
-    var follower = req.session.user.email;
-    Designer.find({
-      followers: follower
-    }).then(function(designers) {
-      return res.json(designers);
-    }).fail(function(err) {
-      return res.serverError(err);
-    });
-  },
+  avatar: function(req, res) {
 
-
-  /**
-   *  @GET
-   *    /user/follow/:designer
-   *
-   *  @description
-   *  follow designer
-   *
-   */
-  follow: function(req, res) {
-    var name = req.params.designer;
-
-    // find the designer instance
-    Designer.findOneByName(name).then(function(designer) {
-      if (!designer)
-        return res.json({
-          message: 'designer not exists'
-        }, 400);
-
-      return designer;
-    }).then(function(designer) {
-
-      // initialize followers array if it is empty
-      var follower = req.session.user.email;
-      if (!designer.followers) designer.followers = [];
-
-      // whether the follower exists in the followers 
-      if (designer.followers.indexOf(follower) != -1)
-        return res.json(designer, 200);
-
-      // add follower into the array
-      designer.followers.push(follower);
-      // save the instance
-      designer.save(function(err) {
-        if (err) return res.serverError(err);
-
-        return res.json(designer, 200);
-      });
-
-    }).fail(function(err) {
-      return res.serverError(err);
-    });
-
-  },
-
-
-  /**
-   *  @GET
-   *    /user/unfollow/:designer
-   *
-   *  @description
-   *  unfollow designer
-   *
-   */
-
-  unfollow: function(req, res) {
-    var name = req.params.designer;
-
-    // find the designer instance
-    Designer.findOneByName(name).then(function(designer) {
-      if (!designer)
-        return res.json({
-          message: 'designer not exists'
-        }, 400);
-
-      return designer;
-    }).then(function(designer) {
-
-      // initialize followers array if it is empty
-      var follower = req.session.user.email;
-
-      // whether the follower exists in the followers 
-      if (!designer.followers || designer.followers.indexOf(follower) == -1)
-        return res.json(designer, 200);
-
-      // remove follower from the array
-      var index = _.indexOf(designer.followers, follower);
-      if (index > -1) designer.followers.splice(index, 1);
-
-      // save the instance
-      designer.save(function(err) {
-        if (err) return res.serverError(err);
-
-        return res.json(designer, 200);
-      });
-
-    }).fail(function(err) {
-      return res.serverError(err);
-    });
-
-  },
-
-
-
-
-
-  /*
-   *  DESIGNER
-   *
-   *  Desgner methods
-   */
-
-  // GET be a designer
-
-  beADesigner: function(req, res) {
-    var sessionUser = req.session.user;
-
-    // Whether is the user already a designer
-    if (sessionUser.userType == 'user') {
-      User.findOneByEmail(sessionUser.email).then(function(user) {
-
-        user.userType = 'designer';
-        return user.saveQ();
-
-      }).then(function(user) {
-
-        return res.redirect('/me');
-
-      }).fail(function(err) {
-        return res.view('500');
-
-      });
-    } else {
+    if (_.isEmpty(req.files.avatar.name))
       return res.redirect('/me');
-    }
-  },
 
-
-  // POST save designer profile
-
-  saveDesigner: function(req, res) {
-    var sessionUser = req.session.user;
-
-    Q.fcall(function() {
-
-      if (!_.isEmpty(req.files.avatar.name)) {
-        return cloudinary.upload(req.files.avatar.path);
-      }
-
-      return '';
-
-    }).then(function(file) {
-      var url = '';
-      if (_.has(file, 'public_id')) {
-        req.body.avatar = cloudinary.url(file.public_id, file.format, {
-          width: 200,
-          height: 200,
-          crop: "fill"
-        });
-      }
-
-      return User.findOneByEmail(sessionUser.email);
+    var email = req.session.user.email;
+    cloudinary.upload(req.files.avatar.path).then(function(file) {
+      // if (_.has(file, 'public_id')) {
+      //   req.body.avatar = cloudinary.url(file.public_id, file.format, {
+      //     width: 200,
+      //     height: 200,
+      //     crop: "fill"
+      //   });
+      // }
+      if (file && file.public_id)
+        return [User.findOneByEmail(email), file];
+      return res.redirect('/me');
+    }).spread(function(user, file) {
+      user.avatar = file;
+      user.save(function(err) {
+        req.session.user.avatar = user.avatar;
+        return res.redirect('/me');
+      });
+    }).fail(function(err) {
+      return res.serverError(err);
     })
 
-    //find user instance
-    .then(function(user) {
-        // No designer created yet
-        if (!user.designerId) return [Designer.create(req.body), user, true];
-        // find the designer instance
-        else return [Designer.findOneById(user.designerId), user, false];
-      })
-      .spread(function(designer, user, isNewDesigner) {
-        if (isNewDesigner) {
-          user.designerId = designer.id;
-          user.save(function(err) {
-            return res.redirect('/me');
-          });
-        } else {
-
-          _.extend(designer, req.body);
-
-          designer.save(function(err) {
-            return res.redirect('/me');
-          });
-        }
-      })
-      .fail(function(err) {
-        console.log(err);
-        return res.view('user/me', {
-          err: err
-        });
-      });
-
   },
 
+
+  // TRY socket
+  // subscribe: function(req, res) {
+
+  //   User.find(function(err, users) {
+  //     if (err) return next(err);
+  //     User.subscribe(req.socket);
+
+  //     User.subscribe(req.socket, users);
+
+  //     res.send(200);
+
+  //   });
+
+  // },
+
+
+
+  /**
+   *  @GET
+   *  @AJAX
+   *    /api/me/followees
+   *
+   *  @description
+   *  get who i am following
+   *  SAILS.JS DOES'T SUPPORT ACCOCIATION
+   *  QUERY LIKE
+   *  FOLLOWERS: {EMAIL: 'EMAIL'}
+   *  WON'T WORK
+   *
+   *  use mongo-native
+   */
+
+  followees: function(req, res) {
+    Designer.native(function(err, collection) {
+      collection.find({
+          "followers.email": req.session.user.email,
+          "followers.isFollowing": true
+        })
+        .toArray(function(err, docs) {
+          if (err) return res.serverError(err);
+          return res.json(docs);
+        });
+    });
+  },
+
+  /**
+   *  @GET
+   *    /api/me/likes
+   *
+   *  @description
+   *  my likes
+   *
+   */
+
+  likes: function(req, res) {
+    Piece.native(function(err, collection) {
+      collection.find({
+          "likes.email": req.session.user.email,
+        })
+        .toArray(function(err, docs) {
+          if (err) return res.serverError(err);
+          return res.json(docs);
+        });
+    });
+  },
 
 
 
