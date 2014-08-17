@@ -304,10 +304,15 @@ module.exports = function(grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/**/*.html': ['.tmp/public/min/production.js'],
-          'views/**/*.html': ['.tmp/public/min/production.js'],
-          'views/**/*.ejs': ['.tmp/public/min/production.js']
+          '.tmp/public/**/*.html': jsFilesToInject,
+          'views/**/*.html': jsFilesToInject,
+          'views/**/*.ejs': jsFilesToInject
         }
+        // files: {
+        //   '.tmp/public/**/*.html': ['.tmp/public/min/production.js'],
+        //   'views/**/*.html': ['.tmp/public/min/production.js'],
+        //   'views/**/*.ejs': ['.tmp/public/min/production.js']
+        // }
       },
 
       devStyles: {
@@ -334,10 +339,15 @@ module.exports = function(grunt) {
           appRoot: '.tmp/public'
         },
         files: {
-          '.tmp/public/index.html': ['.tmp/public/min/production.css'],
-          'views/**/*.html': ['.tmp/public/min/production.css'],
-          'views/**/*.ejs': ['.tmp/public/min/production.css']
+          '.tmp/public/**/*.html': cssFilesToInject,
+          'views/**/*.html': cssFilesToInject,
+          'views/**/*.ejs': cssFilesToInject
         }
+        // files: {
+        //   '.tmp/public/index.html': ['.tmp/public/min/production.css'],
+        //   'views/**/*.html': ['.tmp/public/min/production.css'],
+        //   'views/**/*.ejs': ['.tmp/public/min/production.css']
+        // }
       },
 
       // Bring in JST template object
@@ -451,8 +461,8 @@ module.exports = function(grunt) {
 
   // When Sails is lifted:
   grunt.registerTask('default', [
-    'compileAssets',
-    'linkAssets'
+    // 'compileAssets',
+    // 'linkAssets'
     //'watch'
   ]);
 
@@ -488,18 +498,16 @@ module.exports = function(grunt) {
 
   // When sails is lifted in production
   grunt.registerTask('prod', [
-    'compileAssets',
-    'linkAssets',
-    // 'clean:dev',
-    // 'jst:dev',
+    'clean:dev',
+    'jst:dev',
     // 'less:dev',
-    // 'copy:dev',
+    'copy:dev',
     // 'coffee:dev',
     // 'concat',
     // 'uglify',
     // 'cssmin',
-    // 'sails-linker:prodJs',
-    // 'sails-linker:prodStyles',
+    'sails-linker:prodJs',
+    'sails-linker:prodStyles',
     // 'sails-linker:devTpl',
     // 'sails-linker:prodJsJADE',
     // 'sails-linker:prodStylesJADE',
