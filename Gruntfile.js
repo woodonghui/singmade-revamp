@@ -490,8 +490,6 @@ module.exports = function(grunt) {
   grunt.registerTask('prod', [
     'compileAssets',
     'linkAssets',
-    'clean:build',
-    'copy:build'
     // 'clean:dev',
     // 'jst:dev',
     // 'less:dev',
