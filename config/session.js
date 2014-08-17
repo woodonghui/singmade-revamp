@@ -40,8 +40,8 @@ module.exports.session = {
   // host: 'localhost',
   // port: 27017,
   // db: 'sails',
-  // url: process.env.DB_URL,
-  url: 'mongodb://test:test@ds061839.mongolab.com:61839/singmade-test-db',
+  url: process.env.DB_URL,
+  // url: 'mongodb://test:test@ds061839.mongolab.com:61839/singmade-test-db',
   collection: 'sessions',
   //
   // Optional Values:
