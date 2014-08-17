@@ -1,8 +1,8 @@
 {
-  "name": "singmade",
+  "name": "singmade.com",
   "private": true,
   "version": "0.0.0",
-  "description": "designers retailer",
+  "description": "",
   "dependencies": {
     "sails": "0.9.16",
     "grunt": "0.4.1",

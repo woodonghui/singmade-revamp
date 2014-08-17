@@ -27,11 +27,13 @@ module.exports.adapters = {
   mongo: {
     module: 'sails-mongo',
     schema: true,
-    host: 'localhost',
-    port: 27017,
-    user: '',
-    password: '',
-    database: 'sails'
+    url: process.env.DB_URL
+      // url: 'mongodb://test:test@ds061839.mongolab.com:61839/singmade-test-db'
+      // host: 'localhost',
+      // port: 27017,
+      // user: '',
+      // password: '',
+      // database: 'sails'
   },
 
 
