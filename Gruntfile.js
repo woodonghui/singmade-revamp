@@ -488,6 +488,10 @@ module.exports = function(grunt) {
 
   // When sails is lifted in production
   grunt.registerTask('prod', [
+    'compileAssets',
+    'linkAssets',
+    'clean:build',
+    'copy:build'
     // 'clean:dev',
     // 'jst:dev',
     // 'less:dev',
